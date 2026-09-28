@@ -1,0 +1,38 @@
+  OUTPUT DEVICE 'VB-Cable' reports 1 output channel(s); the factory needs 2.
+  FALLING BACK to 'BlackHole 2ch' (2 channels). The stream is unaffected;
+  it reads the FIFO. To return to VB-Cable, reset it in Audio MIDI Setup or
+  restart coreaudiod, then start again without the fallback.
+=== 0. refuse to start on a dirty audio subsystem ===
+  no wedged scsynth; audio subsystem is clean
+
+=== 1. assemble the play corpus at weight 0.75 ===
+  grains_play_ev: 2400 slots, 1787 from pool (74.5%, asked 75%), 525 self-generated
+    mean generation 0.235  ->  a grain ingested next is generation 1.176
+  grains_play_mid: 1800 slots, 1333 from pool (74.1%, asked 75%), 512 self-generated
+    mean generation 0.302  ->  a grain ingested next is generation 1.227
+  grains_play_macro: 1200 slots, 890 from pool (74.2%, asked 75%), 467 self-generated
+    mean generation 0.410  ->  a grain ingested next is generation 1.308
+
+=== 2. verify descriptors match the assembled audio ===
+corpus                    _order  probes   min rho  moved   verdict
+----------------------------------------------------------------------
+grains_play_ev               yes      45  +0.99997      0   ALIGNED
+grains_play_mid              yes      45  +0.99997      0   ALIGNED
+grains_play_macro            yes      45  +0.99885      2   ties only
+
+  grains_play_macro: rho 0.99885 is below 0.999, but only 2 of 45 probes moved
+  more than 2 ranks. That is tie noise on a low-variance axis, not a wrong order.
+  Run tools/why_misaligned.py --corpus <dir> to see which grains and why.
+  all corpora aligned
+
+=== 3. stream, BEFORE the factory ===
+  tunnel already open
+  splitter already running
+
+=== 4. factory ===
+  starting, log /tmp/factory.log
+  NO BUFFERS AFTER 180 s: the boot did not reach the corpus.
+    registration retries: 0
+  A wedged CoreAudio state survives SIGKILL and needs a REBOOT.
+tools/start_loop.sh: line 320:  8409 Terminated: 15          nohup env SCPORT="$SCPORT" OUTDEV="$OUTDEV" INDEV="$INDEV" MUTABLE="${MUTABLE:-mutable}" GRAINS=grains_play_ev MID=grains_play_mid MACRO=grains_play_macro N=2400 sh tools/run_live.sh > /tmp/factory.log 2>&1
+  stopped the failed factory; the port is free for a retry.

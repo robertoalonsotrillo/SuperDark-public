@@ -1,0 +1,1 @@
+{"median": [9.211412702459526, 5.927991233845602e-06, 0.7663087404962199, 0.5680654994236867], "mad": [1.3131912020974938, 8.783160573963987e-06, 0.15721329599453143, 0.18293697864288216], "n": 300, "corpus": "/Users/robertoalonsotrillo/Desktop/COWORK_OS/SUPERDARK/exo-music/workdir_music/grains_play_mid", "feats": ["log2_centroid", "flatness", "peakiness", "harmonicity"]}

@@ -1,0 +1,7 @@
+includePaths:
+  - /work/lib
+  - /work/behaviour
+excludePaths:
+  - /root/.local/share/SuperCollider/Extensions
+excludeDefaultPaths: false
+postInlineWarnings: false

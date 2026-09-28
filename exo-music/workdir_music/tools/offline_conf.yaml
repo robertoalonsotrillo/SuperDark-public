@@ -1,0 +1,7 @@
+includePaths:
+  - /Users/robertoalonsotrillo/Desktop/COWORK_OS/SUPERDARK/exo-music/workdir_music/tools/offline_classes
+excludePaths:
+  - /Users/robertoalonsotrillo/Library/Application Support/SuperCollider/Extensions
+  - /Library/Application Support/SuperCollider/Extensions
+excludeDefaultPaths: false
+postInlineWarnings: false

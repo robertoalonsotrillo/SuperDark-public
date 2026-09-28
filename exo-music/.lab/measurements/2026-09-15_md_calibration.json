@@ -1,0 +1,71 @@
+{
+ "arms": {
+  "DIVERSE": {
+   "arm": "DIVERSE",
+   "frames": 391246,
+   "holds": 157590,
+   "long_hold_cover": 0.0584,
+   "max_s": 8.51,
+   "mean_s": 0.1138,
+   "median_s": 0.046,
+   "p95_s": 0.322,
+   "sd_s": 0.1547,
+   "sounding": 390222,
+   "sounding_frac": 0.9974,
+   "status": "ok"
+  },
+  "FACTORY": {
+   "arm": "FACTORY",
+   "frames": 78280,
+   "holds": 8049,
+   "long_hold_cover": 0.5321,
+   "max_s": 9.476,
+   "mean_s": 0.2877,
+   "median_s": 0.092,
+   "p95_s": 1.426,
+   "sd_s": 0.602,
+   "sounding": 50354,
+   "sounding_frac": 0.6433,
+   "status": "ok"
+  },
+  "LOOP": {
+   "arm": "LOOP",
+   "frames": 78280,
+   "holds": 15680,
+   "long_hold_cover": 0.3422,
+   "max_s": 2.346,
+   "mean_s": 0.2159,
+   "median_s": 0.092,
+   "p95_s": 1.012,
+   "sd_s": 0.3451,
+   "sounding": 73598,
+   "sounding_frac": 0.9402,
+   "status": "ok"
+  },
+  "SUSTAINED": {
+   "arm": "SUSTAINED",
+   "frames": 649,
+   "holds": 1,
+   "long_hold_cover": 1.0,
+   "max_s": 29.854,
+   "mean_s": 29.854,
+   "median_s": 29.854,
+   "p95_s": 29.854,
+   "sd_s": 0.0,
+   "sounding": 649,
+   "sounding_frac": 1.0,
+   "status": "ok"
+  }
+ },
+ "floor_db": -60.0,
+ "hop_s": 0.046,
+ "measure": "M-D partial_hold",
+ "prereg": ".lab/measurements/2026-09-15_partial_hold_prereg.md",
+ "tol_cents": 50.0,
+ "verdict": {
+  "loop_to_diverse_gap_s": -0.046,
+  "pooled_sd": 0.2674,
+  "separated": false,
+  "separation_sd": -0.17
+ }
+}

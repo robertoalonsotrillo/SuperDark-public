@@ -1,0 +1,389 @@
+{
+  "_comment": "Lifted verbatim from BehaviorTrimmed.sc so the live factory starts identical to the class. The factory re-reads this file at every window boundary, so an agent can change selection while it plays. weight = clip(prev*100 + bias + sum(coef[f] * delta[f]), range) where delta[f] = linlin(this_mean[f] / prev_mean[f], 0, 2, -100, 100).",
+  "_features": [
+    "density",
+    "windowsize",
+    "percpitch",
+    "avgcent",
+    "avgrolloff",
+    "avgflat",
+    "avgrms"
+  ],
+  "machines": {
+    "sc": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.1,
+        "windowsize": -0.1,
+        "percpitch": 0.1,
+        "avgflat": 0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.06,
+      "dur": 0.094,
+      "layer": "micro"
+    },
+    "lu": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "windowsize": 0.2,
+        "percpitch": 0.1,
+        "avgflat": -0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.05,
+      "dur": 0.151,
+      "layer": "macro"
+    },
+    "so": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.1,
+        "windowsize": 0.1,
+        "percpitch": 0.1,
+        "avgflat": -0.1,
+        "avgcent": -0.1,
+        "avgrolloff": -0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.04,
+      "dur": 0.092,
+      "layer": "micro"
+    },
+    "ma": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.1,
+        "windowsize": 0.1,
+        "avgcent": 0.1,
+        "avgrolloff": 0.1,
+        "avgrms": 0.2
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.09,
+      "dur": 0.013,
+      "layer": "micro"
+    },
+    "cr": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.2,
+        "windowsize": 0.1,
+        "avgflat": -0.2,
+        "avgcent": -0.1,
+        "avgrolloff": -0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.11,
+      "dur": 0.013,
+      "layer": "micro"
+    },
+    "te": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.1,
+        "windowsize": -0.1,
+        "avgcent": 0.2,
+        "avgrolloff": 0.1,
+        "avgrms": 0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.1,
+      "dur": 0.11,
+      "layer": "micro"
+    },
+    "ry": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.1,
+        "windowsize": -0.1,
+        "avgcent": -0.1,
+        "avgrolloff": 0.1,
+        "avgrms": 0.2
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.1,
+      "dur": 0.082,
+      "layer": "micro"
+    },
+    "an": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "windowsize": 0.2,
+        "avgcent": 0.1,
+        "avgrolloff": 0.1,
+        "avgrms": -0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.02,
+      "dur": 0.037,
+      "layer": "micro"
+    },
+    "hp": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "windowsize": 0.2,
+        "avgcent": 0.2,
+        "avgrolloff": -0.1,
+        "avgrms": -0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.02,
+      "dur": 0.468,
+      "layer": "macro"
+    },
+    "st": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "windowsize": 0.2,
+        "percpitch": -0.1,
+        "avgcent": -0.2,
+        "avgrms": 0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        0.8
+      ],
+      "drift": 0.015,
+      "dur": 0.891,
+      "layer": "macro"
+    },
+    "ht": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.1,
+        "windowsize": 0.1,
+        "percpitch": 0.1,
+        "avgrolloff": 0.1,
+        "avgflat": 0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.02,
+      "dur": 0.057,
+      "layer": "micro"
+    },
+    "gl": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "windowsize": 0.2,
+        "avgcent": 0.1,
+        "avgrolloff": 0.1,
+        "avgrms": 0.2
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.07,
+      "dur": 0.05,
+      "layer": "micro"
+    },
+    "cp": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "windowsize": 0.2,
+        "percpitch": -0.1,
+        "avgcent": -0.2,
+        "avgrms": 0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        0.85
+      ],
+      "drift": 0.05,
+      "dur": 0.072,
+      "layer": "micro"
+    },
+    "wa": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.1,
+        "windowsize": 0.2,
+        "percpitch": -0.1,
+        "avgcent": -0.2,
+        "avgrms": 0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        0.85
+      ],
+      "drift": 0.05,
+      "dur": 0.054,
+      "layer": "micro"
+    },
+    "gp": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "percpitch": 0.1,
+        "avgrms": -0.2
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.02,
+      "dur": 2.488,
+      "layer": "macro"
+    },
+    "bu": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.2,
+        "percpitch": -0.1,
+        "avgrms": 0.2
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.12,
+      "dur": 11.394,
+      "layer": "macro"
+    },
+    "dr": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.2,
+        "windowsize": 0.2,
+        "avgcent": -0.1,
+        "avgrolloff": -0.1,
+        "avgrms": -0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.012,
+      "dur": 1.864,
+      "layer": "macro"
+    },
+    "pu": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.2,
+        "windowsize": -0.2,
+        "avgrms": 0.1,
+        "avgcent": 0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.09,
+      "dur": 0.443,
+      "layer": "macro"
+    },
+    "hm": {
+      "bias": 5.0,
+      "coef": {
+        "density": -0.1,
+        "windowsize": 0.1,
+        "percpitch": 0.1,
+        "avgflat": -0.2
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.03,
+      "dur": 1.143,
+      "layer": "macro"
+    },
+    "me": {
+      "bias": 5.0,
+      "coef": {
+        "density": 0.1,
+        "windowsize": -0.1,
+        "percpitch": 0.1,
+        "avgcent": 0.2,
+        "avgflat": -0.1
+      },
+      "range": [
+        0.0,
+        100.0,
+        0.0,
+        1.0
+      ],
+      "drift": 0.06,
+      "dur": 0.188,
+      "layer": "macro"
+    }
+  },
+  "_traversal": "drift and nb are the SECOND AXIS of behaviour, and the first that comes from analysing the corpus rather than from naming a category. The 22 machines differ in rhythm and envelope; none of them differed in how it moves through the material, because until descriptors existed there was no geometry to move through. Sustained machines hold the target nearly still in a narrow neighbourhood; machinic ones roam widely. Both are data, so a new traversal can be invented without writing a pattern.",
+  "_layers": "Each machine's MEASURED median event duration, and the grain layer that fits it. Taken from dump_events.scd, not assigned by hand. The vocabulary spans 0.013 s (ma, cr) to 11.4 s (bu), nearly a thousandfold, so no single grain length can serve it: at 0.5 s the fast machines smeared five grains into every event, at 0.06 s the slow ones became isolated clicks separated by silence. micro = 60 ms onset-aligned grains, macro = 2 s. Runtime machines with no entry default to micro."
+}

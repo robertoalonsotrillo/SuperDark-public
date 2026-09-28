@@ -1,0 +1,6 @@
+renders/
+listen/
+*.wav
+*.mp3
+.stream_secrets
+exo-music/workdir_music/mutable/memory*.json

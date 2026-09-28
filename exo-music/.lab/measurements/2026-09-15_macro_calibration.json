@@ -1,0 +1,53 @@
+{
+ "_contamination": "micro and mid also occupy this band and are 7x more numerous, so foreign variation can only push M-A up. A low reading is strong; a high one weak.",
+ "arms": {
+  "DIVERSE": {
+   "arm": "DIVERSE",
+   "frames": 35983,
+   "mean": 0.98223,
+   "p05": 0.9275,
+   "p50": 0.99313,
+   "p95": 1.00427,
+   "sd": 0.02592,
+   "spans": 199,
+   "status": "ok"
+  },
+  "FACTORY": {
+   "arm": "FACTORY",
+   "frames": 35999,
+   "mean": 0.99814,
+   "p05": 0.98097,
+   "p50": 1.00095,
+   "p95": 1.00461,
+   "sd": 0.00897,
+   "spans": 199,
+   "status": "ok"
+  },
+  "LOOP": {
+   "arm": "LOOP",
+   "frames": 35999,
+   "mean": 0.99558,
+   "p05": 0.99558,
+   "p50": 0.99558,
+   "p95": 0.99558,
+   "sd": 0.0,
+   "spans": 199,
+   "status": "ok"
+  }
+ },
+ "band_hz": [
+  220.0,
+  3600.0
+ ],
+ "frame_s": 0.5,
+ "measure": "M-A macro_band_within_span",
+ "n_bands": 32,
+ "prereg": ".lab/measurements/2026-09-15_macro_measure_prereg.md",
+ "span_s": 90.0,
+ "verdict": {
+  "gap": -0.01335,
+  "pooled_sd": 0.01833,
+  "separated": false,
+  "separation_sd": -0.73
+ }
+}

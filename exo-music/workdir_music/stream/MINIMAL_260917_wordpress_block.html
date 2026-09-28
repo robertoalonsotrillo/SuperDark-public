@@ -1,0 +1,127 @@
+<!-- wp:html -->
+<style>
+/* the factory selector */
+.sd-factories { display:flex; gap:8px; margin:10px 0 0; flex-wrap:wrap; }
+.sd-fbtn {
+  display:flex; flex-direction:column; align-items:flex-start; gap:1px;
+  padding:7px 13px; border:1px solid var(--ink); background:transparent;
+  color:var(--ink); font:inherit; font-size:13px; line-height:1.15;
+  cursor:pointer; border-radius:0; transition:background .12s, color .12s;
+}
+.sd-fbtn:hover { background:#efefef; }
+.sd-fbtn.is-on { background:var(--ink); color:#fff; }
+.sd-fbtn.is-on:hover { background:var(--ink); }
+.sd-fbtn .sd-fsub { font-size:10.5px; letter-spacing:.06em;
+                    text-transform:uppercase; opacity:.62; }
+.sd-fbtn.is-off-air { opacity:.45; }
+.sd-fbtn.is-off-air .sd-fsub::after { content:" · off air"; }
+@media (max-width:480px) { .sd-factories { flex-direction:column; }
+                           .sd-fbtn { width:100%; } }
+</style>
+<link rel="stylesheet" href="https://stream.robertoalonsotrillo.com/panel.css">
+<main class="sd-root">
+  <p class="sd-wordmark">SUPERDARK</p>
+  <p class="sd-sub">a fully automated sound-based factory ecosystem, running continuously</p>
+
+  <div class="sd-listen">
+    <button class="sd-btn" id="sd-play" disabled>listen</button>
+    <div class="sd-state" id="sd-status">checking…</div>
+  </div>
+
+<div class="sd-factories" id="sd-factories" role="group" aria-label="choose a factory">
+    <button class="sd-fbtn" data-factory="1" id="sd-f1">
+      Factory&nbsp;1<span class="sd-fsub">continuous</span>
+    </button>
+    <button class="sd-fbtn is-on" data-factory="2" id="sd-f2">
+      Factory&nbsp;2<span class="sd-fsub">in development</span>
+    </button>
+  </div>
+
+  <p class="sd-note">
+    this is not a recording, it is a system, an instrument running in real-time
+    on its own, self-organizing, selecting its own material, and writing its own
+    behaviours, what you hear is whatever state it is in at the moment you
+    arrive, including the states where the system veers into collapse
+  </p>
+  <p class="sd-note">
+    you may never witness the system beginning or ending, there is nothing to
+    wait for and nothing to miss
+  </p>
+
+  <section class="sd-panel" id="sd-panel" hidden>
+    <div class="sd-figs" id="sd-figs"></div>
+
+    <div class="sd-row">
+      <div class="sd-lab">engaged now · window <span id="sd-win">—</span></div>
+      <div class="sd-now" style="margin-top:8px">
+        <div>
+          <div class="sd-lab" style="margin-bottom:2px">machine</div>
+          <div class="big" id="sd-machine">—</div>
+        </div>
+        <div>
+          <div class="sd-lab" style="margin-bottom:2px">voices</div>
+          <div class="vc" id="sd-voices">—</div>
+        </div>
+        <div>
+          <div class="sd-lab" style="margin-bottom:4px">concurrent voices, last 120 windows</div>
+          <div class="sd-voices" id="sd-vtrace"></div>
+        </div>
+      </div>
+      <div class="sd-rt">
+        <div class="sd-lab">sounding now · read from the audio in your browser, at frame rate</div>
+        <div id="sd-rtoff" class="sd-rtoff">press listen — this reads the stream itself, so it runs only while you are hearing it</div>
+        <div id="sd-rton" hidden>
+          <div class="sd-rtnums" style="margin-top:6px">
+            <div class="sd-lab">level <span id="sd-rtlevel">—</span> dBFS</div>
+            <div class="sd-lab">centroid <span id="sd-rtcent">—</span> Hz</div>
+            <div class="sd-lab">peak <span id="sd-rtpeak">—</span></div>
+          </div>
+          <canvas class="sd-spec" id="sd-spec" width="960" height="256"></canvas>
+          <div class="sd-rtoff" id="sd-rtframes" style="padding:4px 0 0"></div>
+          <div class="sd-rtoff" id="sd-rtnote" style="padding:0"></div>
+        </div>
+      </div>
+
+      <div class="sd-lab" style="margin-top:16px">vocabulary · <span id="sd-nmach">—</span> this run · <span id="sd-vocab">—</span></div>
+      <div class="sd-roster" id="sd-roster"></div>
+    </div>
+
+    <div class="sd-row">
+      <div class="sd-lab">charter · edition <span id="sd-ed">—</span> · <span id="sd-verdict">—</span></div>
+      <div class="sd-mh" style="margin-top:10px">
+        <div>metric</div><div>run</div><div id="sd-rollhdr">recent</div><div></div><div>verdict</div>
+      </div>
+      <div id="sd-metrics"></div>
+    </div>
+
+    <div class="sd-row">
+      <div class="sd-lab">output level, last <span id="sd-tracen">—</span> windows</div>
+      <div class="sd-trace" id="sd-trace"></div>
+    </div>
+
+    <div class="sd-row sd-two">
+      <div>
+        <div class="sd-lab">early warning · variance and autocorrelation</div>
+        <div class="sd-ews" id="sd-ews" style="margin-top:8px"></div>
+      </div>
+      <div>
+        <div class="sd-lab">corpus, kernel, delivery</div>
+        <div id="sd-kv" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="sd-gaps" id="sd-gaps"></div>
+  </section>
+
+  <div class="sd-foot">
+    <div>uptime <span id="sd-uptime">—</span> · listeners <span id="sd-listeners">—</span></div>
+    <div style="margin-top:8px">
+      based on
+      <a href="https://www.superdark.ai" target="_blank" rel="noopener"><em>The Superdark Factory</em></a>
+      and
+      <a href="https://exoharness.ai" target="_blank" rel="noopener">ExoHarness</a>
+    </div>
+  </div>
+</main>
+<script src="https://stream.robertoalonsotrillo.com/panel.js" defer></script>
+<!-- /wp:html -->

@@ -1,0 +1,350 @@
+  stripped 20 corpus-free cleanups, 0 remaining
+  Pshuf -> Pseq: 22 sites
+  sciarrinoPlayer  1 pattern(s) at 61, returns at 103
+  lushPlayer       1 pattern(s) at 119, returns at 171
+  sonorousPlayer   2 pattern(s) at 191, 250, returns at 292
+  machinePlayer    1 pattern(s) at 309, returns at 363
+  crankPlayer      1 pattern(s) at 387, returns at 441
+  techPlayer       1 pattern(s) at 457, returns at 513
+  rytmPlayer       1 pattern(s) at 529, returns at 580
+  angelPlayer      1 pattern(s) at 597, returns at 653
+  hissPlayer       1 pattern(s) at 669, returns at 743
+  stretchPlayer    2 pattern(s) at 760, 803, returns at 843
+  halftimePlayer   1 pattern(s) at 859, returns at 900
+  glissPlayer      1 pattern(s) at 916, returns at 960
+  clusterPlayer    1 pattern(s) at 976, returns at 1028
+  wallPlayer       1 pattern(s) at 1044, returns at 1088
+  granPlayer       2 pattern(s) at 1109, 1156, returns at 1203
+  bubblePlayer     1 pattern(s) at 1221, returns at 1271
+  dronePlayer      1 pattern(s) at 1331, returns at 1337
+  pulsePlayer      1 pattern(s) at 1350, returns at 1376
+  harmonyPlayer    1 pattern(s) at 1412, returns at 1418
+  melodyPlayer     1 pattern(s) at 1432, returns at 1461
+  stateMachine     returns the switch at line 1513
+  patched 20 player methods + stateMachine
+  mapped 16 cutoff contours onto the measured corpus band
+--- factory: 2400 grains from grains_play_ev
+compiling class library...
+	Found 855 primitives.
+	Compiling directory '/Applications/SuperCollider.app/Contents/Resources/SCClassLibrary'
+	Compiling directory '/Users/robertoalonsotrillo/Desktop/COWORK_OS/SUPERDARK/exo-music/workdir_music/tools/live_classes'
+	numentries = 840208 / 12508320 = 0.067
+	5520 method selectors, 2266 classes
+	method table size 13413216 bytes, big table size 100066560
+	Number of Symbols 12473
+	Byte Code Size 388412
+	compiled 337 files in 1.45 seconds
+compile done
+localhost : setting clientID to 0.
+internal : setting clientID to 0.
+Class tree inited in 0.01 seconds
+
+
+*** Welcome to SuperCollider 3.12.2. *** For help type cmd-d.
+factory57110 : setting clientID to 0.
+LOG /Users/robertoalonsotrillo/Desktop/COWORK_OS/SUPERDARK/exo-music/workdir_music/renders/live_260918_102800.log
+LAYERS_ACTIVE macro mid micro
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+grey count error
+ERROR: Primitive '_PrimitiveErrorString' failed.
+caught exception 'grey count error
+' in primitive in method Meta_Thread:primitiveErrorString
+RECEIVER:
+class Thread (0x7f93e8576f40) {
+  instance variables [19]
+    name : Symbol 'Thread'
+    nextclass : instance of Meta_Thunk (0x7f93c89fe100, size=19, set=5)
+    superclass : Symbol 'Stream'
+    subclasses : instance of Array (0x7f93e8516440, size=1, set=2)
+    methods : instance of Array (0x7f93c8a66a80, size=36, set=6)
+    instVarNames : instance of SymbolArray (0x7f93e8576d80, size=27, set=4)
+    classVarNames : nil
+    iprototype : instance of Array (0x7f93e85770c0, size=27, set=5)
+    cprototype : nil
+    constNames : nil
+    constValues : nil
+    instanceFormat : Integer 0
+    instanceFlags : Integer 0
+    classIndex : Integer 1082
+    classFlags : Integer 1
+    maxSubclassIndex : Integer 1084
+    filenameSymbol : Symbol '/Applications/SuperCollider.app/Contents/Resources/SCClassLibrary/Common/Core/Thread.sc'
+    charPos : Integer 402
+    classVarIndex : Integer 5
+}
+PATH: /Users/robertoalonsotrillo/Desktop/COWORK_OS/SUPERDARK/exo-music/workdir_music/renders/_live.scd
+CALL STACK:
+	MethodError:reportError
+		arg this = <instance of PrimitiveFailedError>
+	Nil:handleError
+		arg this = nil
+		arg error = <instance of PrimitiveFailedError>
+	Thread:handleError
+		arg this = <instance of Thread>
+		arg error = <instance of PrimitiveFailedError>
+	Object:throw
+		arg this = <instance of PrimitiveFailedError>
+	Function:protect
+		arg this = <instance of Function>
+		arg handler = <instance of Function>
+		var result = <instance of PrimitiveFailedError>
+	Interpreter:executeFile
+		arg this = <instance of Interpreter>
+		arg pathName = "/Users/robertoalonsotrillo/D..."
+		arg args = [*0]
+		var result = nil
+		var saveExecutingPath = nil
+	Process:interpretCmdLine
+		arg this = <instance of Main>
+^^ The preceding error dump is for ERROR: Primitive '_PrimitiveErrorString' failed.
+caught exception 'grey count error
+' in primitive in method Meta_Thread:primitiveErrorString
+RECEIVER: Thread
+
+

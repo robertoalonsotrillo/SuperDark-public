@@ -1,0 +1,82 @@
+{
+  "factory": {
+    "n": 40,
+    "jr_median": -0.1706424740602656,
+    "jr_min": -1.5407971032135712,
+    "jr_max": 1.419504800282734,
+    "bound_median": 1.539420232892168,
+    "margin_median": -1.750735022818647,
+    "margin_max": -0.029594131406661006,
+    "fired": 0
+  },
+  "diverse": {
+    "n": 140,
+    "jr_median": 0.03727148920491067,
+    "jr_min": -1.616686032545453,
+    "jr_max": 1.5364848200150838,
+    "bound_median": 1.0253618511827711,
+    "margin_median": -0.9654636036763213,
+    "margin_max": 0.44245882864838504,
+    "fired": 1
+  },
+  "diverse_quantised": {
+    "n": 140,
+    "jr_median": 0.03526914181488622,
+    "jr_min": -1.5712481814924464,
+    "jr_max": 1.5304631492135037,
+    "bound_median": 1.0235908728968153,
+    "margin_median": -0.9677586559461828,
+    "margin_max": 0.4290298518074598,
+    "fired": 1
+  },
+  "positive": {
+    "n": 30,
+    "jr_median": 2.598758505263785,
+    "jr_min": 2.0193744232099733,
+    "jr_max": 3.2428057146038674,
+    "bound_median": 2.2159062567233443,
+    "margin_median": 0.44002156637094036,
+    "margin_max": 0.9100215643898588,
+    "fired": 30
+  },
+  "auc": 0.9964285714285714,
+  "diverse_margin_max": 0.44245882864838504,
+  "fold_margin_min": 0.007366509803444554,
+  "maxmin_criterion_held": false,
+  "factory_margin_max": -0.029594131406661006,
+  "track_arms": {
+    "n": 140,
+    "jr_median": -0.08871083541093226,
+    "jr_min": -2.093271622993337,
+    "jr_max": 2.316758312502221,
+    "bound_median": 0.9621855552463439,
+    "margin_median": -0.9877957299409379,
+    "margin_max": 0.10507649373624006,
+    "fired": 5
+  },
+  "track_exceedance_pct": 3.5714285714285716,
+  "spurious_block_pct": 1.4183673469387756,
+  "exceedance_pct": 0.7142857142857143,
+  "ok_rate": true,
+  "ok_separation": true,
+  "pass": true,
+  "series": "master_peak",
+  "factory_logs": [
+    "live_260831_011908.log",
+    "live_260901_021822.log",
+    "live_260902_014120.log",
+    "live_260903_013556.log",
+    "live_260904_013018.log",
+    "live_260904_160423.log",
+    "live_260905_135601.log",
+    "live_260908_100337.log",
+    "live_260910_002430.log",
+    "live_260916_002600.log",
+    "live_260916_125717.log",
+    "live_260917_015325.log",
+    "live_260917_112311.log",
+    "live_260917_150231.log",
+    "live_260918_010342.log",
+    "live_260918_115036.log"
+  ]
+}

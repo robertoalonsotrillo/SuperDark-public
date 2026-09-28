@@ -1,0 +1,516 @@
+{
+ "_comment": "Fragments of the twenty originals in Handler_Local.sc, extracted mechanically by tools/extract_fragments.py on 22 Sept 2026. Locals are renamed <machine>_<name>. The writer composes from these; which, where, is the factory's choice. Regenerate after any edit to Handler_Local.sc.",
+ "slots": [
+  "dur",
+  "rate",
+  "cutoff",
+  "pan",
+  "amp",
+  "atk",
+  "rel",
+  "out"
+ ],
+ "machines": {
+  "an": {
+   "player": "angelPlayer",
+   "instrument": "playback",
+   "locals": [
+    "temp",
+    "variance",
+    "cent",
+    "bright",
+    "velocity",
+    "noise",
+    "cutoff",
+    "rate",
+    "reps",
+    "atk"
+   ],
+   "prelude": "an_temp = args.at(\\density).linlin(0.0, 5.0, 0.1, 3.0, clip: \\minmax),\n\t\tan_variance = args.at(\\windowsize).linlin(0.0, 3.0, 0.0, 0.3, clip: \\minmax),\n\t\tan_cent = args.at(\\avgcent).linlin(0, 10000, 16000, 200, clip: \\minmax),\n\t\tan_bright = args.at(\\avgrolloff).linlin(0, 12000, 200, 10000, clip: \\minmax),\n\t\tan_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 4.0, clip: \\minmax),\n\t\tan_noise = args.at(\\avgflat).linlin(0.0, 0.1, 1, 3, clip:\\minmax),\n\t\tan_cutoff = rrand(100 * an_velocity, 400 * an_velocity),\n\t\tan_rate = (rrand(1, 2) * 2),\n\t\tan_reps = rrand(16, 80).asInteger,\n\t\tan_atk = (0.5 * (~sampleSize / an_rate))",
+   "slots": {
+    "dur": "Pwhite(0.001, 0.1, inf)",
+    "rate": "Pwrand(\n\t\t\t\t[an_rate, (-1 * an_rate)],\n\t\t\t\t[2, 2].normalizeSum,\n\t\t\t\tan_reps)",
+    "atk": "an_atk",
+    "rel": "(~sampleSize - (an_atk + 0.1))",
+    "pan": "Pwhite(\n\t\t\t\trrand(-1, 1),\n\t\t\t\t(rrand(-1, 1) + 0.2)\n\t\t\t\t\t.linlin(-1.0, 1.0, -1.0, 1.0, clip: \\minmax),\n\t\t\t\tan_reps)",
+    "amp": "Pseq(\n\t\t\t\t\tEnv([0, 0.1, 0], [rrand(4, 10), rrand(6, 14)], \\sin).discretize(77).asArray,\n\t\t\t\t\tinf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([an_cutoff, an_cutoff * 4, an_cutoff / 2], [rrand(8, 12), rrand(8, 10)], \\sin).discretize(77).asArray,\n\t\t\t\t\tinf)",
+    "out": "Pseq([\n\t\t\t\t(~reverbLongBus[rrand(0, 4) % ~numPairs]),\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]!4)\n\t\t\t], inf)"
+   }
+  },
+  "bu": {
+   "player": "bubblePlayer",
+   "instrument": "playgran",
+   "locals": [
+    "dense",
+    "cent",
+    "reps",
+    "velocity",
+    "rates",
+    "bright",
+    "freq",
+    "altfreq",
+    "atk"
+   ],
+   "prelude": "bu_dense = args.at(\\density).linlin(0.0, 10.0, 20, 1, clip: \\minmax),\n\t\tbu_cent = args.at(\\avgcent).linlin(0, 10000, 200, 16000, clip: \\minmax),\n\t\tbu_reps = rrand(1, 5),\n\t\tbu_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 1.6, clip: \\minmax),\n\t\tbu_rates = [1.0, bu_velocity],\n\t\tbu_bright = args.at(\\avgrolloff).linlin(500, 12000, 0, 2, clip: \\minmax),\n\t\tbu_freq = rrand(1, bu_dense),\n\t\tbu_altfreq = rrand(1, bu_dense),\n\t\tbu_atk = 0.1",
+   "slots": {
+    "dur": "Pwhite(1, bu_dense, inf)",
+    "atk": "Pwhite(bu_atk, bu_atk * 13)",
+    "rel": "(~sampleSize * 2) - bu_atk",
+    "rate": "Pseq([\n\t\t\t\t(bu_rates[0]!bu_reps),\n\t\t\t\t(bu_rates[1]!bu_reps),\n\t\t\t], rrand(3, 20))",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([bu_cent, bu_cent * 5, bu_cent / 2], [rrand(3, 20), rrand(3, 20)], \\sin).discretize(16).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-1, 1)",
+    "amp": "Pwhite(0.01, 0.08)",
+    "out": "Pseq([\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]),\n\t\t\t], inf)"
+   }
+  },
+  "cp": {
+   "player": "clusterPlayer",
+   "instrument": "playback",
+   "locals": [
+    "freq",
+    "resonant",
+    "bright",
+    "velocity",
+    "reps",
+    "atk"
+   ],
+   "prelude": "cp_freq = args.at(\\mainpitch)\n\t\t\t.asString\n\t\t\t.pitchcps\n\t\t\t.linlin(0, 10000, 2, 0.01, clip: \\mixmax),\n\t\tcp_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 7, 2, clip: \\minmax),\n\t\tcp_bright = args.at(\\avgrolloff).linlin(0, 12000, 1, 5, clip: \\minmax),\n\t\tcp_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 3.0, clip: \\minmax),\n\t\tcp_reps = rrand(6, 35).asInteger,\n\t\tcp_atk = 0.1",
+   "slots": {
+    "dur": "Pwhite(0.01, 0.1)",
+    "atk": "cp_atk",
+    "rel": "(~sampleSize * 2) - cp_atk",
+    "rate": "Pseq([\n\t\t\t\t(0.6),\n\t\t\t\t(0.5),\n\t\t\t\t(-0.53),\n\t\t\t\t(0.52),\n\t\t\t\t(-0.51),\n\t\t\t\t(-0.5)\n\t\t\t], inf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([cp_bright * 1000, cp_bright * 2000, cp_bright * 500], [rrand(0.1, 10), rrand(4, 19)], \\sin).discretize(69).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-1 * (cp_freq / 2), cp_freq / 2)",
+    "amp": "Pseq(\n\t\t\t\t\tEnv([0.01, 0.08, 0.03], [rrand(0.1, 10), rrand(4, 19)], \\sin).discretize(69).asArray,\n\t\t\t\t\tinf)",
+    "out": "Pseq([\n\t\t\t\t(~dryBus[cp_bright.asInteger % ~numPairs]!(cp_resonant.asInteger)),\n\t\t\t\t(~reverbShortBus[2 % ~numPairs]!(cp_resonant.asInteger)),\n\t\t\t\t(~reverbMidBus[rrand(0, 4) % ~numPairs]!2),\n\t\t\t], cp_reps)"
+   }
+  },
+  "cr": {
+   "player": "crankPlayer",
+   "instrument": "playbackHP",
+   "locals": [
+    "dur",
+    "variance",
+    "bright",
+    "cent",
+    "width",
+    "resonant",
+    "velocity",
+    "cutoff",
+    "reps",
+    "buffno",
+    "atk"
+   ],
+   "prelude": "cr_dur = args.at(\\density).linlin(0.0, 5.0, 0.2, 1.0, clip: \\minmax),\n\t\tcr_variance = args.at(\\windowsize).linlin(0.0, 3.0, 0.1, 0.3, clip: \\minmax),\n\t\tcr_bright = args.at(\\avgrolloff).linlin(1000, 12000, 1, 4, clip: \\minmax),\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tcr_cent = args.at(\\avgcent).linlin(0, 10000, 150, 6000, clip: \\minmax),\n\t\tcr_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 1.0, clip: \\minmax),\n\t\tcr_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 7, 2, clip: \\minmax),\n\t\tcr_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 0.7, clip: \\minmax),\n\t\tcr_cutoff = rrand(200 * cr_velocity, 800 * cr_velocity),\n\t\tcr_reps = rrand(10, cr_bright * 50),\n\t\tcr_buffno = rrand(0, 10),\n\t\tcr_atk = 0.1",
+   "slots": {
+    "dur": "Pwrand(\n\t\t\t\t[(cr_dur / 16), (cr_dur / 64), (cr_dur / 128), (cr_dur /32), (cr_dur / 8)],\n\t\t\t\t[16, 2, 1, 2, 1].normalizeSum,\n\t\t\t\tinf)",
+    "rate": "1.0",
+    "atk": "Pwhite(0.01, ~sampleSize / 2)",
+    "rel": "Pwhite(0.01, ~sampleSize / 2)",
+    "pan": "Pseq(\n\t\t\t\t\tEnv([-1.0, 1.0, rrand(1.0, -1.0)], [rrand(2, 10), rrand(2, 20)], \\sin).discretize(128).asArray,\n\t\t\t\t\tinf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([cr_cent, cr_cent * 2, cr_cent / 2], [rrand(2, 10), rrand(2, 40)], \\sin).discretize(128).asArray,\n\t\t\t\t\tinf)",
+    "amp": "Pwhite(0.0, 0.25)",
+    "out": "Pseq([\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]!((cr_bright + 1).asInteger)),\n\t\t\t\t(~reverbMidBus[rrand(0, 4) % ~numPairs]!((cr_bright + 1).asInteger)),\n\t\t\t\t(~dryBus[rrand(0, 4) % ~numPairs]!(3))\n\t\t\t\t], inf)"
+   }
+  },
+  "dr": {
+   "player": "dronePlayer",
+   "instrument": "playback",
+   "locals": [
+    "dur",
+    "dark",
+    "width",
+    "body",
+    "atk",
+    "voice"
+   ],
+   "prelude": "dr_dur = args.at(\\windowsize).linlin(0, 5, 3.0, 9.0, clip: \\minmax),\n\t\tdr_dark = args.at(\\avgcent).linlin(0, 10000, 90, 700, clip: \\minmax),\n\t\tdr_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.4, 1.0, clip: \\minmax),\n\t\t\n\t\t\n\t\t\n\t\tdr_body = args.at(\\avgrms).linlin(0.0, 1.0, 0.12, 0.39, clip: \\minmax),\n\t\tdr_atk = 1.2,\n\t\tdr_voice",
+   "slots": {
+    "dur": "Pwhite(dr_dur * 0.4, dr_dur)",
+    "atk": "dr_atk",
+    "rel": "dr_dur",
+    "rate": "Pseq([ Pgeom(0.25 * ratio, 0.972, 24) ], inf)",
+    "cutoff": "Pseq([ Pseries(dr_dark, dr_dark / 24, 12),\n\t\t\t\t\tPseries(dr_dark * 1.5, dr_dark / -24, 12) ], inf)",
+    "pan": "Pwhite(-1 * dr_width, dr_width)",
+    "amp": "Pwhite(dr_body * 0.6, dr_body)",
+    "out": "bus"
+   }
+  },
+  "gl": {
+   "player": "glissPlayer",
+   "instrument": "playback",
+   "locals": [
+    "freq",
+    "resonant",
+    "bright",
+    "velocity",
+    "reps",
+    "atk"
+   ],
+   "prelude": "gl_freq = args.at(\\mainpitch)\n\t\t\t.asString\n\t\t\t.pitchcps\n\t\t\t.linlin(0, 10000, 2, 0.01, clip: \\mixmax),\n\t\tgl_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 2, 7, clip: \\minmax),\n\t\tgl_bright = args.at(\\avgrolloff).linlin(0, 12000, 1, 5, clip: \\minmax),\n\t\tgl_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 3.0, clip: \\minmax),\n\t\tgl_reps = rrand(gl_resonant * 2, gl_resonant * 10).asInteger,\n\t\tgl_atk = 0.1",
+   "slots": {
+    "dur": "Pwhite(0.01, 0.1)",
+    "atk": "gl_atk",
+    "rel": "(~sampleSize * 2) - gl_atk",
+    "rate": "Pseq(\n\t\t\t\t\tEnv([0.80, rrand(1.0, 1.1), rrand(0.8, 1.1)], [rrand(0.1, gl_resonant), rrand(gl_resonant, gl_resonant * 3)], \\sin).discretize(71).asArray,\n\t\t\t\t\tinf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([gl_bright * 1000, gl_bright * 2000, gl_bright * 500], [rrand(0.1, 3), rrand(4, 19)], \\sin).discretize(71).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-1 * (gl_freq / 2), gl_freq / 2)",
+    "amp": "Pwhite(0.01, 0.08)",
+    "out": "Pseq([\n\t\t\t\t(~reverbShortBus[2 % ~numPairs]!(gl_resonant.asInteger)),\n\t\t\t\t(~reverbMidBus[rrand(0, 4) % ~numPairs]!2),\n\t\t\t], gl_reps)"
+   }
+  },
+  "gp": {
+   "player": "granPlayer",
+   "instrument": "playgran",
+   "locals": [
+    "freq",
+    "choose",
+    "dense",
+    "cent",
+    "reps",
+    "rates",
+    "bright",
+    "rate",
+    "atk"
+   ],
+   "prelude": "gp_freq = args.at(\\mainpitch).asString.pitchcps,\n\t\tgp_choose = rrand(0, 4),\n\t\tgp_dense = args.at(\\density).linlin(0.0, 5.0, 5, 1, clip: \\minmax),\n\t\tgp_cent = args.at(\\avgcent).linlin(0, 10000, 200, 16000, clip: \\minmax),\n\t\tgp_reps = rrand(1, 5),\n\t\tgp_rates = [0.125, 0.25, 0.5, 1.0],\n\t\tgp_bright = args.at(\\avgrolloff).linlin(500, 12000, 0, 2, clip: \\minmax),\n\t\tgp_rate = gp_rates[gp_bright.asInteger],\n\t\tgp_atk = 0.1",
+   "slots": {
+    "dur": "Pwhite(1, gp_dense, inf)",
+    "atk": "Pwhite(gp_atk, gp_atk * 13)",
+    "rel": "(~sampleSize * 2) - gp_atk",
+    "rate": "Pseq([\n\t\t\t\t(0.5!(1)),\n\t\t\t\t(1.0!(1)),\n\t\t\t\t(-2.0!(1))\n\t\t\t], gp_reps)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([gp_cent, gp_cent * 5, gp_cent / 2], [(gp_reps / 2).asInteger, (gp_reps / 2).asInteger], \\sin).discretize(17).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-1, 1)",
+    "amp": "Pwhite(0.01, 0.08)",
+    "out": "Pseq([\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]),\n\t\t\t\t(~reverbMidBus[rrand(0, 4) % ~numPairs]),\n\t\t\t\t(~reverbLongBus[rrand(0, 4) % ~numPairs]),\n\t\t\t], inf)"
+   }
+  },
+  "hm": {
+   "player": "harmonyPlayer",
+   "instrument": "playback",
+   "locals": [
+    "dur",
+    "bright",
+    "width",
+    "body",
+    "prog",
+    "voice"
+   ],
+   "prelude": "hm_dur = args.at(\\windowsize).linlin(0, 5, 1.1, 3.5, clip: \\minmax),\n\t\thm_bright = args.at(\\avgrolloff).linlin(0, 12000, 500, 4000, clip: \\minmax),\n\t\thm_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.3, 0.9, clip: \\minmax),\n\t\t\n\t\thm_body = args.at(\\avgrms).linlin(0.0, 1.0, 0.12, 0.36, clip: \\minmax),\n\t\thm_prog = [0, 9, 5, 7],   \n\t\thm_voice",
+   "slots": {
+    "dur": "hm_dur",
+    "atk": "0.05",
+    "rel": "hm_dur * 0.9",
+    "rate": "Pseq(\n\t\t\t\t\thm_prog.collect({ |root| 2 ** ((root + degree - 12) / 12) }),\n\t\t\t\t\tinf)",
+    "cutoff": "Pseq([ Pseries(hm_bright, hm_bright / 16, 8),\n\t\t\t\t\tPseries(hm_bright * 1.5, hm_bright / -16, 8) ], inf)",
+    "pan": "Pwhite(-1 * hm_width, hm_width)",
+    "amp": "hm_body",
+    "out": "bus"
+   }
+  },
+  "hp": {
+   "player": "hissPlayer",
+   "instrument": "playbackHP",
+   "locals": [
+    "temp",
+    "variance",
+    "cent",
+    "bright",
+    "velocity",
+    "noise",
+    "rate",
+    "reps",
+    "atk"
+   ],
+   "prelude": "hp_temp = args.at(\\density).linlin(0.0, 5.0, 0.1, 3.0, clip: \\minmax),\n\t\thp_variance = args.at(\\windowsize).linlin(0.0, 3.0, 0.0, 0.3, clip: \\minmax),\n\t\thp_cent = args.at(\\avgcent).linlin(0, 10000, 16000, 200, clip: \\minmax),\n\t\thp_bright = args.at(\\avgrolloff).linlin(0, 12000, 200, 10000, clip: \\minmax),\n\t\thp_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 4.0, clip: \\minmax),\n\t\thp_noise = args.at(\\avgflat).linlin(0.0, 0.1, 1, 3, clip:\\minmax),\n\t\thp_rate = (hp_velocity.asInteger * 2),\n\t\thp_reps = rrand(hp_temp * 30, hp_temp * 80).asInteger,\n\t\thp_atk = (0.5 * (~sampleSize / hp_rate))",
+   "slots": {
+    "dur": "Pseq(\n\t\t\t\t\tEnv([hp_velocity / 10, hp_velocity, hp_velocity / 10], [rrand(hp_noise, hp_noise * 3), rrand(hp_noise * 2, hp_noise * 4)], \\sin).discretize(8).asArray,\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tinf)",
+    "rate": "Pwrand(\n\t\t\t\t[\n\t\t\t\t\tPwhite(hp_rate - 0.3, hp_rate),\n\t\t\t\t\tPwhite(\n\t\t\t\t\t\t(-1 * (hp_rate - 0.3)),\n\t\t\t\t\t\t(-1 * hp_rate))\n\t\t\t\t],\n\t\t\t\t[2, 2].normalizeSum,\n\t\t\t\thp_reps)",
+    "atk": "hp_atk",
+    "rel": "(~sampleSize - (hp_atk + 0.05))",
+    "pan": "Pwhite(\n\t\t\t\trrand(-1, 1),\n\t\t\t\t(rrand(-1, 1) + 0.2)\n\t\t\t\t\t.linlin(-1.0, 1.0, -1.0, 1.0, clip: \\minmax),\n\t\t\t\thp_reps)",
+    "amp": "Pseq(\n\t\t\t\t\tEnv([0, 0.1, 0], [rrand(4, 10), rrand(6, 14)], \\sin).discretize(8).asArray,\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tinf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([hp_bright, hp_bright * 2, hp_bright], [rrand(8, 12), rrand(8, 10)], \\sin).discretize(8).asArray,\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\tinf)",
+    "out": "Pseq([\n\t\t\t\t(~reverbLongBus[rrand(0, 4) % ~numPairs]),\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]!4)\n\t\t\t], inf)"
+   }
+  },
+  "ht": {
+   "player": "halftimePlayer",
+   "instrument": "playback",
+   "locals": [
+    "freq",
+    "resonant",
+    "bright",
+    "velocity",
+    "reps",
+    "atk"
+   ],
+   "prelude": "ht_freq = args.at(\\mainpitch)\n\t\t\t.asString\n\t\t\t.pitchcps\n\t\t\t.linlin(0, 10000, 2, 0.01, clip: \\mixmax),\n\t\tht_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 7, 2, clip: \\minmax),\n\t\tht_bright = args.at(\\avgrolloff).linlin(0, 12000, 1, 5, clip: \\minmax),\n\t\tht_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 3.0, clip: \\minmax),\n\t\tht_reps = rrand(6, 35).asInteger,\n\t\tht_atk = 0.1",
+   "slots": {
+    "dur": "Pwhite(0.01, 0.1)",
+    "atk": "ht_atk",
+    "rel": "(~sampleSize * 2) - ht_atk",
+    "rate": "Pseq([\n\t\t\t\t(0.5!3),\n\t\t\t\t(-0.5!(ht_bright.asInteger))\n\t\t\t], inf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([ht_bright * 1000, ht_bright * 2000, ht_bright * 500], [rrand(0.1, 3), rrand(4, 19)], \\sin).discretize(68).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-1 * (ht_freq / 2), ht_freq / 2)",
+    "amp": "Pwhite(0.01, 0.08)",
+    "out": "Pseq([\n\t\t\t\t(~dryBus[3 % ~numPairs]!(ht_resonant.asInteger)),\n\t\t\t\t(~reverbShortBus[2 % ~numPairs]!(ht_resonant.asInteger)),\n\t\t\t\t(~reverbMidBus[rrand(0, 4) % ~numPairs]!2),\n\t\t\t], ht_reps)"
+   }
+  },
+  "lu": {
+   "player": "lushPlayer",
+   "instrument": "playback",
+   "locals": [
+    "dur",
+    "dense",
+    "bright",
+    "cent",
+    "width",
+    "resonant",
+    "noise",
+    "velocity",
+    "atk"
+   ],
+   "prelude": "lu_dur = args.at(\\windowsize).linlin(0, 5, 1, 5, clip: \\minmax),\n\t\tlu_dense = args.at(\\density).linlin(0, 5, 1, 5, clip: \\minmax),\n\t\tlu_bright = args.at(\\avgrolloff).linlin(0, 12000, 0, 5, clip: \\minmax),\n\t\tlu_cent = args.at(\\avgcent).linlin(0, 10000, 200, 13000, clip: \\minmax),\n\t\tlu_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.3, 1.0, clip: \\minmax),\n\t\tlu_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 1, 4, clip: \\minmax),\n\t\tlu_noise = args.at(\\avgflat).linlin(0.0, 0.1, 1, 3, clip:\\minmax),\n\t\tlu_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 0.7, clip: \\minmax),\n\t\tlu_atk = 0.1",
+   "slots": {
+    "dur": "Pseq([\n\t\t\t\tPwhite(0.01, 0.3, Pwhite(0, 10)),\n\t\t\t\tPwhite(4.0, 10.4, 1)\n\t\t\t], inf)",
+    "atk": "lu_atk",
+    "rel": "~sampleSize - lu_atk",
+    "rate": "Pseq(\n\t\t\t\t[1.0]++\n\t\t\t\t(0.5!(lu_noise.asInteger))++\n\t\t\t\t(-1.0!(lu_dense.asInteger * 2))++\n\t\t\t\t(-0.5!((lu_dense/2).asInteger)),\n\t\t\t\t2)",
+    "cutoff": "lu_cent",
+    "pan": "Pwhite(-1 * lu_width, lu_width)",
+    "amp": "Pwhite(0.02, 0.1)",
+    "out": "~reverbLongBus[rrand(0, 4) % ~numPairs]"
+   }
+  },
+  "ma": {
+   "player": "machinePlayer",
+   "instrument": "playback",
+   "locals": [
+    "dur",
+    "variance",
+    "bright",
+    "cent",
+    "width",
+    "resonant",
+    "velocity",
+    "cutoff",
+    "reps",
+    "atk"
+   ],
+   "prelude": "ma_dur = args.at(\\density).linlin(0.0, 5.0, 0.2, 1.0, clip: \\minmax),\n\t\tma_variance = args.at(\\windowsize).linlin(0.0, 3.0, 0.1, 0.3, clip: \\minmax),\n\t\tma_bright = args.at(\\avgrolloff).linlin(1000, 12000, 1, 4, clip: \\minmax),\n\t\tma_cent = args.at(\\avgcent).linlin(0, 10000, 200, 16000, clip: \\minmax),\n\t\tma_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 1.0, clip: \\minmax),\n\t\tma_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 7, 2, clip: \\minmax),\n\t\tma_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 0.7, clip: \\minmax),\n\t\tma_cutoff = rrand(200 * ma_velocity, 800 * ma_velocity),\n\t\tma_reps = rrand(10, ma_bright * 50),\n\t\tma_atk = 0.1",
+   "slots": {
+    "dur": "Pwrand(\n\t\t\t\t[(ma_dur / 16), (ma_dur / 8), (ma_dur / 16), (ma_dur /32), (ma_dur / 2)],\n\t\t\t\t[16, 1, 1, 2, 1].normalizeSum,\n\t\t\t\tinf)",
+    "rate": "Pwrand(\n\t\t\t\t[0.5, 1, 2.0, -1],\n\t\t\t\t[2, 6, 1, 6].normalizeSum,\n\t\t\t\tma_reps * 2)",
+    "atk": "ma_atk",
+    "rel": "~sampleSize - ma_atk",
+    "pan": "Pwhite(\n\t\t\t\trrand(-1, 1),\n\t\t\t\t(rrand(-1, 1) + 0.3)\n\t\t\t\t\t.linlin(-1.0, 1.0, -1.0, 1.0, clip: \\minmax),\n\t\t\t\tinf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([ma_cent, ma_cent * 2, ma_cent / 2], [rrand(2, 10), rrand(2, 40)], \\sin).discretize(128).asArray,\n\t\t\t\t\tinf)",
+    "amp": "Pseq(\n\t\t\t\t\tEnv([0.01, 0.1, 0.01], [rrand(2, 10), rrand(2, 40)], \\sin).discretize(128).asArray,\n\t\t\t\t\tinf)",
+    "out": "Pseq([\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]!((ma_bright + 1).asInteger)),\n\t\t\t\t(~dryBus[rrand(0, 4) % ~numPairs]!(3))\n\t\t\t\t], inf)"
+   }
+  },
+  "me": {
+   "player": "melodyPlayer",
+   "instrument": "playback",
+   "locals": [
+    "dur",
+    "bright",
+    "width",
+    "body",
+    "motif",
+    "atk"
+   ],
+   "prelude": "me_dur = args.at(\\windowsize).linlin(0, 5, 0.18, 0.6, clip: \\minmax),\n\t\tme_bright = args.at(\\avgcent).linlin(0, 10000, 600, 5000, clip: \\minmax),\n\t\tme_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.3, 0.9, clip: \\minmax),\n\t\t\n\t\tme_body = args.at(\\avgrms).linlin(0.0, 1.0, 0.25, 0.75, clip: \\minmax),\n\t\tme_motif = [0, 2, 4, 2, 7, 5, 4, 0],   \n\t\tme_atk = 0.01",
+   "slots": {
+    "dur": "Pseq([me_dur, me_dur, me_dur * 2, me_dur], inf)",
+    "atk": "me_atk",
+    "rel": "me_dur * 2",
+    "rate": "Pstutter(\n\t\t\t\tPwrand([1, 2, 3], [0.6, 0.3, 0.1], inf),\n\t\t\t\tPseq(me_motif.collect({ |d| 2 ** (d / 12) }), inf))",
+    "cutoff": "Pclutch(\n\t\t\t\tPseq([ Pseries(me_bright, me_bright / 12, 6),\n\t\t\t\t\tPseries(me_bright * 1.5, me_bright / -12, 6) ], inf),\n\t\t\t\tPseq([true, false, false, true], inf))",
+    "pan": "Pwhite(-1 * me_width, me_width)",
+    "amp": "Pseq([me_body, me_body * 0.6, me_body * 0.8, me_body * 0.6], inf)",
+    "out": "~dryBus[0 % ~numPairs]"
+   }
+  },
+  "pu": {
+   "player": "pulsePlayer",
+   "instrument": "playback",
+   "locals": [
+    "grid",
+    "bright",
+    "width",
+    "body",
+    "atk"
+   ],
+   "prelude": "pu_grid = args.at(\\density).linlin(0, 5, 0.45, 0.08, clip: \\minmax),\n\t\tpu_bright = args.at(\\avgcent).linlin(0, 10000, 400, 6000, clip: \\minmax),\n\t\tpu_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.2, 0.9, clip: \\minmax),\n\t\t\n\t\tpu_body = args.at(\\avgrms).linlin(0.0, 1.0, 0.25, 0.70, clip: \\minmax),\n\t\tpu_atk = 0.005",
+   "slots": {
+    "dur": "Pfsm([\n\t\t\t\t#[0, 1],\n\t\t\t\tPseq([pu_grid, pu_grid, pu_grid, pu_grid], 1),                #[1, 2],\n\t\t\t\tPseq([pu_grid * 2, pu_grid, pu_grid], 1),                  #[0, 3],\n\t\t\t\tPseq([pu_grid / 2, pu_grid / 2, pu_grid, pu_grid * 2], 1),    #[1, 3],\n\t\t\t\tPseq([pu_grid * 4], 1),                              #[0, 1, 2]\n\t\t\t], inf)",
+    "atk": "pu_atk",
+    "rel": "0.35",
+    "rate": "Pwrand([1.0, 2.0, 0.5], [0.7, 0.2, 0.1], inf)",
+    "cutoff": "pu_bright",
+    "pan": "Pwhite(-1 * pu_width, pu_width)",
+    "amp": "Pseq([pu_body, pu_body * 0.5, pu_body * 0.7, pu_body * 0.5], inf)",
+    "out": "~dryBus[0 % ~numPairs]"
+   }
+  },
+  "ry": {
+   "player": "rytmPlayer",
+   "instrument": "playback",
+   "locals": [
+    "temp",
+    "variance",
+    "cent",
+    "bright",
+    "velocity",
+    "noise",
+    "cutoff",
+    "reps",
+    "atk"
+   ],
+   "prelude": "ry_temp = args.at(\\density).linlin(0.0, 10.0, 0.1, 3.0, clip: \\minmax),\n\t\try_variance = args.at(\\windowsize).linlin(0.0, 3.0, 0.01, 0.1, clip: \\minmax),\n\t\try_cent = args.at(\\avgcent).linlin(0, 10000, 200, 16000, clip: \\minmax),\n\t\try_bright = args.at(\\avgrolloff).linlin(0, 12000, 0.1, 0.01, clip: \\minmax),\n\t\try_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 4.0, clip: \\minmax),\n\t\try_noise = args.at(\\avgflat).linlin(0.0, 0.1, 1, 3, clip:\\minmax),\n\t\try_cutoff = rrand(200 * ry_velocity, 800 * ry_velocity),\n\t\try_reps = rrand(10, 35).asInteger,\n\t\try_atk = rrand(0.01, ry_variance)",
+   "slots": {
+    "dur": "Pseq([\n\t\t\t\try_temp,\n\t\t\t\t(rrand(0.01, 0.03) ! ry_velocity.asInteger * 2).sum\n\t\t\t], inf)",
+    "rate": "Pwrand(\n\t\t\t\t[1.0, 1.3, -1.0, -0.9, -0.8, 2.0],\n\t\t\t\t[6, 1, 6, 4, 2, 1].normalizeSum,\n\t\t\t\try_reps * 2)",
+    "atk": "rrand(ry_atk, ry_atk + 0.1)",
+    "rel": "~sampleSize - 0.2",
+    "pan": "Pwhite(\n\t\t\t\trrand(-1, 1),\n\t\t\t\t(rrand(-1, 1) + 0.2)\n\t\t\t\t\t.linlin(-1.0, 1.0, -1.0, 1.0, clip: \\minmax),\n\t\t\t\tinf)",
+    "amp": "0.08",
+    "cutoff": "ry_cent",
+    "out": "Pseq([\n\t\t\t\t(~dryBus[0 % ~numPairs]!3),\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]!(ry_noise.asInteger))\n\t\t\t], inf)"
+   }
+  },
+  "sc": {
+   "player": "sciarrinoPlayer",
+   "instrument": "playback",
+   "locals": [
+    "dur",
+    "dense",
+    "bright",
+    "cent",
+    "width",
+    "resonant",
+    "noise",
+    "velocity",
+    "atk"
+   ],
+   "prelude": "sc_dur = args.at(\\windowsize).linlin(0, 5, 1, 5, clip: \\minmax),\n\t\tsc_dense = args.at(\\density).linlin(0, 5, 1, 5, clip: \\minmax),\n\t\tsc_bright = args.at(\\avgrolloff).linlin(0, 12000, 0, 5, clip: \\minmax),\n\t\tsc_cent = args.at(\\avgcent).linlin(0, 10000, 200, 16000, clip: \\minmax),\n\t\tsc_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.3, 1.0, clip: \\minmax),\n\t\tsc_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 1, 4, clip: \\minmax),\n\t\tsc_noise = args.at(\\avgflat).linlin(0.0, 0.1, 1, 3, clip:\\minmax),\n\t\tsc_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 0.7, clip: \\minmax),\n\t\tsc_atk = 0.1",
+   "slots": {
+    "dur": "Pseq([\n\t\t\t\tPwhite(0.05, 0.2 * sc_dur, (sc_dur + 2).asInteger),\n\t\t\t\tPwhite(0.01, 0.02 * sc_dur, (sc_dur + 2).asInteger),\n\t\t\t\tPwhite(0.4, 1.2, (sc_dur + 2).asInteger)\n\t\t\t], 2)",
+    "atk": "sc_atk",
+    "rel": "~sampleSize - sc_atk",
+    "rate": "Pseq(\n\t\t\t\t[1.0]++\n\t\t\t\t(2.0!(sc_dense.asInteger))++\n\t\t\t\t(0.5!(sc_noise.asInteger))++\n\t\t\t\t(-1.0!(sc_dense.asInteger * 2))++\n\t\t\t\t(2.0!((sc_dense/2).asInteger)),\n\t\t\t\t2)",
+    "cutoff": "sc_cent",
+    "pan": "Pwhite(-1 * sc_width, sc_width)",
+    "amp": "Pwhite(0.02, 0.1)",
+    "out": "Pseq([\n\t\t\t\t(~dryBus[rrand(0, 4) % ~numPairs]!(sc_bright.asInteger)),\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]!4),\n\t\t\t\t(~reverbLongBus[rrand(0, 4) % ~numPairs]!(sc_resonant.asInteger)),\n\t\t\t\t(~dryBus[1 % ~numPairs]!1),\n\t\t\t\t(~reverbMidBus[0 % ~numPairs]!(sc_resonant.asInteger))], inf)"
+   }
+  },
+  "so": {
+   "player": "sonorousPlayer",
+   "instrument": "playback",
+   "locals": [
+    "dur",
+    "dense",
+    "bright",
+    "cent",
+    "width",
+    "resonant",
+    "noise",
+    "velocity",
+    "reps",
+    "granreps",
+    "choose",
+    "freq",
+    "atk"
+   ],
+   "prelude": "so_dur = args.at(\\windowsize).linlin(0, 5, 1, 5, clip: \\minmax),\n\t\tso_dense = args.at(\\density).linlin(0, 5, 1, 5, clip: \\minmax),\n\t\tso_bright = args.at(\\avgrolloff).linlin(0, 12000, 0, 5, clip: \\minmax),\n\t\tso_cent = args.at(\\avgcent).linlin(0, 10000, 200, 16000, clip: \\minmax),\n\t\tso_width = args.at(\\avgrms).linlin(0.0, 1.0, 0.3, 1.0, clip: \\minmax),\n\t\tso_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 1, 4, clip: \\minmax),\n\t\tso_noise = args.at(\\avgflat).linlin(0.0, 0.1, 1, 3, clip:\\minmax),\n\t\tso_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 0.7, clip: \\minmax),\n\t\tso_reps = rrand(so_dense, so_dense * 7),\n\t\tso_granreps = rrand(0, 1),\n\t\tso_choose = rrand(0, 2),\n\t\tso_freq = args.at(\\mainpitch).asString.pitchcps,\n\t\tso_atk = rrand(0.01, 0.4)",
+   "slots": {
+    "dur": "Pseq([\n\t\t\t\tPwhite(0.05, 0.2 * so_dur, 5),\n\t\t\t\tPwhite(0.01, 0.02 * so_dur, 6),\n\t\t\t\tPwhite(0.4, 2.2, (so_dur + 2).asInteger)\n\t\t\t], so_reps)",
+    "atk": "so_atk",
+    "rel": "~sampleSize - so_atk",
+    "rate": "Pseq(\n\t\t\t\t[1.0]++\n\t\t\t\t(0.5!(so_noise.asInteger))++\n\t\t\t\t(-1.0!(so_dense.asInteger * 2))++\n\t\t\t\t(1.0!((so_dense/2).asInteger)),\n\t\t\t\tinf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([so_cent, so_cent * 2, so_cent / 2], [1.0, 6.0], \\sin).discretize(33).asArray,\n\t\t\t\t\tinf)",
+    "amp": "Pseq(\n\t\t\t\t\tEnv([0.01, 0.1, 0.01], [1.0, 6.0], \\sin).discretize(33).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-1 * so_width, so_width)",
+    "out": "Pseq([\n\t\t\t\t(~reverbShortBus[0 % ~numPairs]!2),\n\t\t\t\t(~reverbMidBus[4 % ~numPairs]!3)], 6)"
+   }
+  },
+  "st": {
+   "player": "stretchPlayer",
+   "instrument": "playback",
+   "locals": [
+    "rates",
+    "bright",
+    "rate",
+    "freq",
+    "velocity",
+    "choose",
+    "atk"
+   ],
+   "prelude": "st_rates = [0.125, 0.25, 0.5],\n\t\tst_bright = args.at(\\avgrolloff).linlin(500, 12000, 0, 2, clip: \\minmax),\n\t\tst_rate = st_rates[st_bright.asInteger],\n\t\tst_freq = args.at(\\mainpitch)\n\t\t\t.asString\n\t\t\t.pitchcps\n\t\t\t.linlin(0, 10000, 1, 10, clip: \\minmax),\n\t\tst_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 0.0, 0.7, clip: \\minmax),\n\t\tst_choose = rrand(0, 4),\n\t\tst_atk = 0.1",
+   "slots": {
+    "atk": "st_atk",
+    "rel": "0.5 * (1 / st_rate)",
+    "dur": "Pwhite(0.01, 3.0)",
+    "rate": "st_rate",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([st_freq * 2000, st_freq * 1000, st_freq * 500], [rrand(0.1, 0.5), rrand(1, 9)], \\sin).discretize(18).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-0.2, 0.2)",
+    "amp": "Pwhite(0.01, 0.1)",
+    "out": "Pseq([\n\t\t\t\t(~dryBus[rrand(0, 4) % ~numPairs]!2),\n\t\t\t\t(~reverbShortBus[4 % ~numPairs]!1),\n\t\t\t\t(~reverbMidBus[3 % ~numPairs]!(st_freq.asInteger)),\n\t\t\t], rrand(2, 5))"
+   }
+  },
+  "te": {
+   "player": "techPlayer",
+   "instrument": "playback",
+   "locals": [
+    "temp",
+    "variance",
+    "cent",
+    "bright",
+    "velocity",
+    "noise",
+    "cutoff",
+    "reps",
+    "atk"
+   ],
+   "prelude": "te_temp = args.at(\\density).linlin(0.0, 5.0, 0.1, 3.0, clip: \\minmax),\n\t\tte_variance = args.at(\\windowsize).linlin(0.0, 3.0, 0.0, 0.3, clip: \\minmax),\n\t\tte_cent = args.at(\\avgcent).linlin(0, 10000, 16000, 200, clip: \\minmax),\n\t\tte_bright = args.at(\\avgrolloff).linlin(0, 12000, 0.1, 0.01, clip: \\minmax),\n\t\tte_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 4.0, clip: \\minmax),\n\t\tte_noise = args.at(\\avgflat).linlin(0.0, 0.1, 1, 3, clip:\\minmax),\n\t\tte_cutoff = rrand(200 * te_velocity, 800 * te_velocity),\n\t\tte_reps = rrand(10, 35).asInteger,\n\t\tte_atk = rrand(0.01, te_variance + 0.1)",
+   "slots": {
+    "dur": "rrand(te_temp / 2, te_temp)",
+    "rate": "Pwrand(\n\t\t\t\t[0.5, 1, 2.0, -1],\n\t\t\t\t[2, 6, 1, 6].normalizeSum,\n\t\t\t\tte_reps * 2)",
+    "atk": "te_atk",
+    "rel": "~sampleSize - te_atk",
+    "pan": "Pwhite(\n\t\t\t\trrand(-1, 1),\n\t\t\t\t(rrand(-1, 1) + 0.2)\n\t\t\t\t\t.linlin(-1.0, 1.0, -1.0, 1.0, clip: \\minmax),\n\t\t\t\tinf)",
+    "amp": "Pseq(\n\t\t\t\t\tEnv([0, 0.1, 0], [(te_reps / 2).asInteger, (te_reps / 2).asInteger], \\sin).discretize(44).asArray,\n\t\t\t\t\tinf)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([te_cutoff, te_cutoff * 6, te_cutoff / 2], [(te_reps / 2).asInteger, (te_reps / 2).asInteger], \\sin).discretize(44).asArray,\n\t\t\t\t\tinf)",
+    "out": "Pseq([\n\t\t\t\t(~dryBus[0 % ~numPairs]!3),\n\t\t\t\t(~reverbShortBus[rrand(0, 4) % ~numPairs]!(te_noise.asInteger))\n\t\t\t], inf)"
+   }
+  },
+  "wa": {
+   "player": "wallPlayer",
+   "instrument": "playback",
+   "locals": [
+    "freq",
+    "resonant",
+    "bright",
+    "velocity",
+    "reps",
+    "atk"
+   ],
+   "prelude": "wa_freq = args.at(\\mainpitch)\n\t\t\t.asString\n\t\t\t.pitchcps\n\t\t\t.linlin(0, 10000, 2, 0.01, clip: \\mixmax),\n\t\twa_resonant = args.at(\\percpitch).linlin(0.0, 1.0, 7, 2, clip: \\minmax),\n\t\twa_bright = args.at(\\avgrolloff).linlin(0, 12000, 1, 5, clip: \\minmax),\n\t\twa_velocity = args.at(\\avgrms).linlin(0.0, 1.0, 1.0, 3.0, clip: \\minmax),\n\t\twa_reps = rrand(6, 35).asInteger,\n\t\twa_atk = 0.1",
+   "slots": {
+    "dur": "Pwhite(0.01, 0.1)",
+    "atk": "wa_atk",
+    "rel": "(~sampleSize / 2) - wa_atk",
+    "rate": "Pwhite(0.5, 1.5)",
+    "cutoff": "Pseq(\n\t\t\t\t\tEnv([wa_bright * 1000, wa_bright * 2000, wa_bright * 500], [rrand(0.1, 10), rrand(4, 19)], \\sin).discretize(69).asArray,\n\t\t\t\t\tinf)",
+    "pan": "Pwhite(-1 * (wa_freq / 2), wa_freq / 2)",
+    "amp": "Pseq(\n\t\t\t\t\tEnv([0.06, 0.08, 0.01], [rrand(0.01, 20), rrand(0.01, 20)], \\sin).discretize(69).asArray,\n\t\t\t\t\tinf)",
+    "out": "Pseq([\n\t\t\t\t(~reverbShortBus[2 % ~numPairs]!(wa_resonant.asInteger)),\n\t\t\t\t(~reverbLongBus[rrand(0, 4) % ~numPairs]!2),\n\t\t\t], wa_reps)"
+   }
+  }
+ }
+}

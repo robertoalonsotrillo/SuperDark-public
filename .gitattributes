@@ -1,0 +1,8 @@
+# Archon's class library, copied in verbatim so the agent's sandbox can compile it.
+# Roberto and Marek's code, not written here, and it is 1,300+ lines of the
+# largest files in the repo. Excluded from language statistics.
+exo-music/workdir/lib/** linguist-vendored
+exo-music/workdir/behaviour/** linguist-vendored
+
+# Run notes are documentation that happens to contain the exact script executed.
+notes/runs/** linguist-documentation

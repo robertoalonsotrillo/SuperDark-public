@@ -1,0 +1,178 @@
+{
+  "_what_this_is": "P518: 'an authored, editioned description of acceptable (norms) probability states (metrics), given conditions (constraints)'. This is NOT policy.json. policy.json is MECHANISM -- how to select, how far to drift, how many voices. It never says what would count as better. The charter is INTENT, expressed as a distribution.",
+  "_why_distributions_and_not_targets": "Three evaluation layers have been built here and all three failed. E3 modelled the investigator's ear and scored rho = -0.861 against blind ranking. The audibility score modelled the factory's own output and took the vocabulary from nine machines to four. The transfer operator models the factory's own dynamics and narrows vocabulary monotonically with its weight, 22.3 -> 16.7. Every one was A SCALAR TO CLIMB, and a scalar to climb is a hill the factory walks up until it is standing on one thing. P520 says a mature spec contains 'multivariate possibilities of acceptable output distributions given input constraints, with holdouts, confidence intervals, and sample size requirements'. A metric here is a TEST -- does the run fall inside the acceptable region -- not a quantity to maximise. There is no gradient to ascend.",
+  "_the_kernel_is_not_here": "P526: the charter is soft, negotiated and contributed to by the factory; the HARD cast is the kernel, 'a kind of live-or-die button whose threat is continuously invoked'. That separation must be architectural. The kernel is declared in kernel.json and is NOT writable by the factory. This file IS writable by the factory, at the metrics layer only, per P536.",
+  "edition": 4,
+  "authored": "2026-09-02",
+  "author": "Roberto Alonso Trillo",
+  "coauthored_with": "Claude (Anthropic), in session",
+  "_edition": "P518: 'Every change to the input is a new charter, and every new charter is a new version of the factory.' Bump the edition on every change and never edit in place. This is the link to version design: charter edition IS a factory version, and it is the one versioning axis that does not require reading anything off the wake -- which matters, because the first attempt to read versions off the wake (phase B, 27 Aug) found the latent state scored WORSE than the marginal.",
+  "norms": {
+    "_layer": "P540: norms are where the factory hits a wall. 'A factory that constructs its norms wholesale moves us into the undefined Class 4, something with no dependencies on its world.' So norms are NOT ceded. They are authored here, and the factory's route to them is governance, not writing. Kept deliberately few and qualitative: a norm is a direction of value, not a number.",
+    "_factory_may_write": false,
+    "n1_audible": "The factory should be heard. Silence is a failure of the factory, not an aesthetic choice it is entitled to make.",
+    "n2_varied": "The factory should not settle. Whatever it is doing, it should not be doing only that.",
+    "n3_coherent": "What the factory does should hold together over spans longer than a single event.",
+    "n4_its_own": "The factory should sound like something other than its corpus played back. Concatenation is the means, not the end."
+  },
+  "constraints": {
+    "_layer": "P518's 'given conditions'. Facts about the world the factory is cast into. Not preferences and not negotiable -- if these change, the charter is re-priced.",
+    "_factory_may_write": false,
+    "c1_corpus": "2,422 vetted FMA tracks, 20.2 h. Two grain layers: 2,400 at 60 ms onset-aligned, 1,200 at 2 s.",
+    "c2_realtime": "44100 Hz, 512-sample block. An 11.6 ms deadline that cannot be time-shared.",
+    "c3_vocabulary": "27 provisioned behaviours: 20 inherited from Archon, 2 mine, 5 derived from FMA temporal regimes.",
+    "c4_no_world": "There is currently NO exogenous input. numInputBusChannels = 0. Every derivation terminates in inputs the architect supplied (P113). This is the binding constraint on the whole enterprise and it is stated here so that no metric below can pretend otherwise."
+  },
+  "metrics": {
+    "_layer": "P536: 'The easiest ground within a charter to cede to the factory's contributory arm is its metrics layer... if you hand it a norm, it will propose a metric to represent that norm.' THIS IS THE CEDED LAYER. The factory may propose additions via mutable/charter_proposals.json. Proposals are not auto-adopted: adoption is a governance act and bumps the edition.",
+    "_factory_may_write": "proposals only",
+    "_calibration": "Bounds are set from measured behaviour on the 6 h run of 26 Aug and the 20-minute control runs, so the charter is neither vacuous nor unsatisfiable. Where the current factory FAILS a metric that is recorded below rather than hidden by widening the bound.",
+    "m1_not_silent": {
+      "norm": "n1_audible",
+      "test": "fraction of windows with master peak < 0.004",
+      "acceptable": [
+        null,
+        null
+      ],
+      "min_windows": 100,
+      "_measured": "6h run 6.9%, gap_r1 4.8%. PASSES. Bound set at 0.15 because three consecutive silent windows is roughly 35 s of nothing, which is audible as a fault.",
+      "descriptive": true,
+      "_demoted": "Demoted to a DESCRIPTION in edition 4. It counted silence unconditionally, and silence tracks the section amplitude the factory chooses: 34.8% of windows are silent near amp 0, 0.2% at amp >= 1e-2, and 47% of all windows sit below amp 1e-4. So it measured a compositional habit, not a failure of n1_audible. It is still reported, because the silence is part of the work, and it carries no bound, because there is nothing here to pass or fail."
+    },
+    "m2_level": {
+      "norm": "n1_audible",
+      "test": "median master peak per window",
+      "acceptable": [
+        0.02,
+        0.35
+      ],
+      "min_windows": 100,
+      "_measured": "6h run 0.066, gap_r1 0.109. PASSES. Upper bound guards against a factory that satisfies n1 by shouting."
+    },
+    "m3_no_clipping": {
+      "norm": "n1_audible",
+      "test": "p99 of clip fraction",
+      "acceptable": [
+        0.0,
+        0.02
+      ],
+      "min_windows": 100,
+      "_measured": "6h run p90 = 0.000, max 0.013. PASSES."
+    },
+    "m4_vocabulary_breadth": {
+      "norm": "n2_varied",
+      "test": "distinct BEHAVIOURS sounded per 100 windows, bridges collapsed to their transition",
+      "acceptable": [
+        8,
+        null
+      ],
+      "min_windows": 100,
+      "_measured": "Deliberately counts behaviours, not names. The 6 h run played 158 distinct NAMES and ~34 behaviours, because 131 of those names were near-copies spanning 7 transitions. A metric over names would have scored that run as a triumph. This is the single most important line in this file.  RE-PRICED 1 Sept 2026: previous bound [8, 34]. See _repriced.",
+      "_repriced": "UPPER BOUND REMOVED in edition 2, by the architect, after the kernel scrapped the factory on 1 Sept for three sustained failures of which this was one (35.5 and 34.5 against a ceiling of 34).\n\nTHE CEILING WAS THE CALIBRATION RUN'S OWN VALUE. _measured records that 'the 6 h run played 158 distinct NAMES and ~34 behaviours'. Setting the ceiling AT the observed value means any increase fails, which is not a criterion, it is a high-water mark.\n\nAND IT CONTRADICTED THE NORM IT SERVES. m4 is filed under n2_varied: 'The factory should not settle. Whatever it is doing, it should not be doing only that.' A ceiling on variety penalises the factory for doing MORE of what that norm asks for. The failure mode a ceiling would guard against -- so much switching that nothing coheres -- belongs to n3_coherent and is already measured there by m6_texture and m7_spectral_gap_settles, the latter taken directly from P227/P230's pathology names.\n\nThis is a RE-PRICING and not a widening-until-it-passes. The bound was not moved to a larger number that the current run happens to clear; the ceiling was removed because the argument for having one does not survive being stated. m1_not_silent and m7_spectral_gap_settles were left FAILING and are being investigated as faults in the factory, not in the charter."
+    },
+    "m5_not_converging": {
+      "norm": "n2_varied",
+      "test": "convergence2.py terminal ratio C1 (last-quarter M2 / first-quarter M2)",
+      "acceptable": [
+        0.75,
+        2.0
+      ],
+      "min_windows": 100,
+      "_measured": "Below 0.75 is the pre-registered convergence criterion, i.e. the factory has settled. No run in the 15-run ablation or the 6 h run has ever fallen below it. The upper bound is new and untested: a factory whose entropy runs away is not varied, it is incoherent."
+    },
+    "m6_texture": {
+      "norm": "n3_coherent",
+      "test": "median concurrent voices",
+      "acceptable": [
+        2,
+        5
+      ],
+      "min_windows": 100,
+      "_measured": "6h run 3, gap_r1 2. PASSES. This exists because run 38's fixed value of 2 made voice density the one thing that could not vary."
+    },
+    "m7_spectral_gap_settles": {
+      "norm": "n3_coherent",
+      "test": "interquartile range of the operator's spectral gap",
+      "acceptable": [
+        0.02,
+        0.45
+      ],
+      "min_windows": 100,
+      "_measured": "P227 stable failure is a gap frozen wide; P230 thrash is a gap that never settles. This is the one metric taken directly from the paper's own pathology names. 6h run: gap ran 0.295-0.422 at p10-p90, IQR well inside. PASSES.",
+      "suspended": {
+        "since_edition": 3,
+        "by": "Roberto Alonso Trillo",
+        "when": "2026-09-02",
+        "reason": "The statistic measures the operator's age, not the factory's coherence. TransferOperator accumulates transition counts with no decay, and saveMemory persists those counts into memory.json so they span every run the factory has ever done. A cumulative estimator converges, so the interquartile range of its lambda2 falls with accumulated history whatever the factory does. Confirmed on a live restart: the operator reported 137 cells while the run had played 4 distinct machines.",
+        "evidence": "docs/M7_IS_NOT_A_PROPERTY_OF_THE_FACTORY.md",
+        "why_not_repriced": "No value of the bound repairs a statistic that decays with age. Widening it would buy a pass now and fail again later, which is how m6 stayed decorative for ten runs.",
+        "replacement_requires": "A second operator with exponential forgetting, observing the same cells and steering nothing, logging both lambda2 and its observation count; the bound then derived from a shuffled null over the cell sequence rather than from a run that happened to pass. The forgetting operator exists (TransferOperator halflife argument, tested) but is not yet wired into the factory, so no data exists to derive a bound from."
+      },
+      "_scoring": "Reported SUSPENDED, which counts as undecided. It is not counted as a departure, because a metric that cannot be measured cannot be failed."
+    },
+    "m8_in_band": {
+      "norm": "n4_its_own",
+      "test": "median spectral centroid, Hz",
+      "acceptable": [
+        400,
+        4000
+      ],
+      "min_windows": 100,
+      "_measured": "6h run 1252 Hz, gap_r1 980 Hz. PASSES. The corpus has a 99% rolloff near 2.3 kHz, so a median far above that means the factory is filtering where no audio exists -- the defect that made st, gp and bu inaudible for weeks."
+    },
+    "_absent_and_why": "There is NO metric for n4_its_own beyond a band check, and no metric at all for whether the output is GOOD. That is not an oversight. P290 requires judges that 'answer to signals in the world', and constraint c4 records that this factory has no world. Every metric above is therefore a metric over the factory's own output -- exactly the failure mode of the audibility score. They are stated as ACCEPTANCE TESTS rather than objectives to limit the damage, but the limitation is real and is the reason evaluation design (phase E) is blocked behind a world surface (phase D).",
+    "_MEASURED_VACUITY_27_AUG": "Edition 1 was scored against every run on disk: the 6 h run, five runs from the 15-run operator ablation including both extremes, the pre-A3 bridge control, and the post-A3 control. EVERY RUN SATISFIES EVERY METRIC. The charter has zero discriminating power. It cannot separate op0.50, where the operator narrowed the sounding vocabulary to 16.7 machines, from op0.00 at 22.3 -- a difference the ablation measured as a clean monotonic dose-response. So the charter currently prices nothing. Recorded here rather than fixed, because the two available fixes are both wrong: tightening bounds until the runs I dislike fail is the mirror image of widening bounds until they pass, and inventing metrics that happen to separate known runs is fitting the charter to the data it was meant to judge. The right reading is the one constraint c4 already states: metrics computed over the factory's OWN OUTPUT can detect gross malfunction -- silence, clipping, filtering out of band -- and the factory reliably clears that floor. Anything finer requires a signal the factory did not generate. The vacuity is not a flaw in this file, it is c4 showing up as a number, and it is the sharpest available argument for why phase D comes before phase E.",
+    "m1_audible_when_driving": {
+      "norm": "n1_audible",
+      "test": "fraction of windows that are silent (master peak < 0.004) AMONG those where the factory is driving output (section amplitude >= 0.01)",
+      "acceptable": [
+        0.0,
+        0.015
+      ],
+      "min_windows": 100,
+      "_derivation": "The bound states what it discriminates. Level faults simulated against 861 driving windows from the 8 h run of 2 Sept: observed 0.2%, -6 dB 0.3%, -12 dB 1.2%, -18 dB 4.5%, -24 dB 14.5%. The observed rate is 0.23% +/- 0.32% with a 99.9% upper bound of 0.77%, so 1.5% sits above healthy noise and below a level collapse. It deliberately does NOT catch a -12 dB drop: m2_level tests median level and covers that, and a metric asked to do two jobs does both badly.",
+      "_threshold_choice": "amp >= 0.01 is where conditional silence reaches 0.2% and 'the factory is trying to sound' stops being ambiguous. It was measured, not chosen for roundness; the gradient below it is smooth, so any lower cut would blend intention with abstention.",
+      "_untested": "Derived from one 8 h run. The sensitivity table is arithmetic on that run's peaks, not an observation of a factory actually running 12 dB down, so it predicts what a fault would look like rather than reporting what one did look like. Re-check when a genuine level fault next occurs."
+    }
+  },
+  "departures": {
+    "_layer": "P526: 'Departures from the charter are acceptable within limits, and those limits are necessarily undefined or dynamically defined.' So a failed metric is not automatically fatal.",
+    "tolerated_failing_metrics": 2,
+    "_tolerated": "A run failing up to two metrics is a departure, not a scrapping. Failing three or more invokes the kernel. This number is a stipulation and is recorded as one.",
+    "never_tolerated": [
+      "m3_no_clipping"
+    ],
+    "_never": "Clipping is not an aesthetic departure, it is a broken transport, and it masqueraded as one for seven consecutive diagnoses."
+  },
+  "_lineage": [
+    {
+      "edition": 2,
+      "from": 1,
+      "change": "m4_vocabulary_breadth upper bound removed",
+      "by": "Roberto Alonso Trillo",
+      "when": "2026-09-01T14:21:50",
+      "prompted_by": "kernel firing 2026-09-01T13:35:44",
+      "reason": "ceiling was the calibration run's observed value and contradicted n2_varied",
+      "left_failing": [
+        "m1_not_silent",
+        "m7_spectral_gap_settles"
+      ]
+    },
+    {
+      "edition": 3,
+      "from": 2,
+      "by": "Roberto Alonso Trillo",
+      "when": "2026-09-02T11:07:02",
+      "change": "suspended m7_spectral_gap_settles",
+      "initiated_by": "architect"
+    },
+    {
+      "edition": 4,
+      "from": 3,
+      "by": "Roberto Alonso Trillo",
+      "when": "2026-09-02T11:30:54",
+      "change": "m1_not_silent demoted to descriptive; m1_audible_when_driving added",
+      "initiated_by": "architect"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# the assembled play corpora live on the SSD now, reached through symlinks, so
+# iCloud cannot sync them out from under a running factory (9 Sept)
+workdir_music/grains_play_ev
+workdir_music/grains_play_mid
+workdir_music/grains_play_macro

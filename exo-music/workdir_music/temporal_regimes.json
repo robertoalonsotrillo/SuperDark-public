@@ -1,0 +1,66 @@
+{
+  "_comment": "Temporal regimes measured from FMA audio, not composed. IOI from spectral-flux onsets; rise/fall from the flux envelope around each onset; drift is centroid variation over 4 s windows. k-means over z-scored features. derive_machines.py turns each regime into a runtime machine.",
+  "_source": "/Volumes/FMA/fma/audio/fma_medium",
+  "_tracks_analysed": 240,
+  "_features": [
+    "ioi_median",
+    "ioi_spread",
+    "ioi_fastest",
+    "rise",
+    "fall",
+    "drift",
+    "density"
+  ],
+  "regimes": [
+    {
+      "ioi_median": 0.13931972789115646,
+      "ioi_spread": 0.09287981859410431,
+      "ioi_fastest": 0.049922902494331074,
+      "rise": 0.44117913832199546,
+      "fall": 0.046439909297052155,
+      "drift": 0.22155935299741789,
+      "density": 6.364740411656323,
+      "n_tracks": 78
+    },
+    {
+      "ioi_median": 0.15092970521541949,
+      "ioi_spread": 0.11609977324263039,
+      "ioi_fastest": 0.046439909297052155,
+      "rise": 0.5340589569160998,
+      "fall": 0.2438095238095238,
+      "drift": 0.09305310700609512,
+      "density": 5.579588707331265,
+      "n_tracks": 12
+    },
+    {
+      "ioi_median": 0.18575963718820862,
+      "ioi_spread": 0.1393197278911565,
+      "ioi_fastest": 0.09287981859410431,
+      "rise": 0.4179591836734694,
+      "fall": 0.046439909297052155,
+      "drift": 0.25039885537843753,
+      "density": 4.74616267626678,
+      "n_tracks": 68
+    },
+    {
+      "ioi_median": 0.20317460317460317,
+      "ioi_spread": 0.19446712018140588,
+      "ioi_fastest": 0.06965986394557823,
+      "rise": 0.18575963718820862,
+      "fall": 0.046439909297052155,
+      "drift": 0.3521086777515507,
+      "density": 3.8452148437499996,
+      "n_tracks": 50
+    },
+    {
+      "ioi_median": 0.23219954648526078,
+      "ioi_spread": 0.16253968253968254,
+      "ioi_fastest": 0.12770975056689343,
+      "rise": 0.06965986394557823,
+      "fall": 0.023219954648526078,
+      "drift": 0.5004101749146854,
+      "density": 3.8619331691576084,
+      "n_tracks": 32
+    }
+  ]
+}

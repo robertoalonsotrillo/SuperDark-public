@@ -1,0 +1,12 @@
+{
+  "_comment": "The factory's own values for the five knobs it was handed on 20 Sept 2026, inside the ranges the bracketed run showed safe. Written by the factory at section boundaries; not hand-edited. Ignored unless policy knobs_to_factory is 1.",
+  "acquire_reach": "0.3412",
+  "acquire_stall_limit": "19.0",
+  "attention_weight": "0.0408",
+  "macro_bias": "1.3723",
+  "memory_half_life": "165.0",
+  "novelty_penalty": "0.1946",
+  "operator_weight": "0.2775",
+  "synth_slot_weight": "0.6732",
+  "temperature": "0.9836"
+}

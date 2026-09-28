@@ -1,0 +1,231 @@
+.sd-root {
+  --ink:#000; --paper:#fff; --ground:#f6f6f6;
+  --mute:#767676; --ghost:#c9c9c9; --rule:#e3e3e3;
+  --focus:#ff5757;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  max-width:820px; margin:0 auto; padding:0 0 8px;
+  font-family: favorit, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:14px; line-height:1.5; color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+.sd-root *, .sd-root *::before, .sd-root *::after { box-sizing:border-box; }
+
+/* Hide the theme's own page title so SUPERDARK appears once, inside the block.
+   The theme renders it as a bare <h1> directly inside .marxe-lateral-xeral
+   (verified on the live page, not guessed). This rule has to reach outside
+   .sd-root by necessity, but it only ever loads on the page carrying this
+   block, so it cannot affect the rest of the site. The direct-child selector
+   keeps it from touching any other heading. */
+.marxe-lateral-xeral > h1 { display:none; }
+
+.sd-wordmark { font-size:15px; font-weight:700; letter-spacing:-0.01em; margin:0 0 2px; }
+.sd-sub { color:var(--mute); margin:0 0 26px; }
+
+/* ---- listen ---------------------------------------------------------- */
+.sd-listen { display:flex; align-items:center; gap:16px;
+  border-top:2px solid var(--ink); border-bottom:2px solid var(--ink);
+  padding:18px 0; margin-bottom:20px; }
+.sd-btn { font:inherit; font-size:15px; background:none; color:var(--ink);
+  border:2px solid var(--ink); padding:9px 22px; cursor:pointer; letter-spacing:-0.01em; }
+.sd-btn:hover:not(:disabled) { background:var(--ink); color:var(--paper); }
+.sd-btn:disabled { border-color:var(--ghost); color:var(--ghost); cursor:default; }
+.sd-state { color:var(--mute); flex:1; }
+.sd-state b { color:var(--ink); font-weight:400; }
+/* The ONLY colour in the design, and it carries meaning twice: this dot means
+   sounding now, and a failing charter metric below. Nothing else is red. */
+.sd-live::before { content:""; display:inline-block; width:8px; height:8px;
+  background:var(--focus); margin-right:9px; vertical-align:1px; }
+.sd-note { color:var(--mute); margin:0 0 12px; }
+.sd-run { color:var(--mute); margin:0 0 18px; font-size:12.5px;
+          font-family:ui-monospace, Menlo, monospace; letter-spacing:.02em; }
+
+/* ---- panel ----------------------------------------------------------- */
+.sd-panel { margin-top:34px; border-top:2px solid var(--ink); }
+.sd-lab { font-family:var(--mono); font-size:10px; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--mute); }
+.sd-row { border-bottom:1px solid var(--rule); padding:14px 0; }
+
+.sd-figs { display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
+  border-bottom:1px solid var(--rule); }
+.sd-fig { padding:14px 0; }
+.sd-fig .n { font-size:30px; font-weight:700; letter-spacing:-0.03em;
+  line-height:1.05; margin-top:3px; font-variant-numeric:tabular-nums; }
+.sd-fig .u { color:var(--mute); font-size:11px; }
+
+/* charter: label, value, bound-bar, verdict. The bar is the point -- it shows
+   WHERE in its acceptable region each metric sits, so a metric scraping its
+   bound looks different from one sitting comfortably inside it. A pass/fail
+   pill alone would hide exactly the approach-to-departure the panel is for. */
+.sd-m, .sd-mh { display:grid; grid-template-columns:1fr 58px 58px 104px 52px;
+  grid-template-areas:"k v roll bar d";
+  gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--rule); }
+.sd-mh { border-bottom:1px solid var(--ink); padding-bottom:5px; }
+.sd-mh div { font-family:var(--mono); font-size:9.5px; letter-spacing:0.1em;
+  text-transform:uppercase; color:var(--mute); text-align:right; }
+.sd-mh div:first-child { text-align:left; }
+/* the rolling reading, deliberately quieter than the cumulative one: the
+   cumulative value is what the charter tests, the rolling value is only what
+   the factory is doing lately */
+.sd-m .roll { grid-area:roll; font-family:var(--mono); font-size:11px;
+  text-align:right; color:var(--mute); font-variant-numeric:tabular-nums; }
+.sd-m .k { grid-area:k; }
+.sd-m .v { grid-area:v; }
+.sd-m .bar-cell { grid-area:bar; }
+.sd-m .d { grid-area:d; }
+.sd-m:last-child { border-bottom:0; }
+/* min-width:0 lets the 1fr column actually shrink. Without it a grid track sized
+   1fr still refuses to go below its content's min-content width, so the label
+   pushed the verdict column off the right edge on a phone and "FAIL" was cut in
+   half -- the one word on the page that must never be the one that gets clipped. */
+.sd-m .k { font-family:var(--mono); font-size:11px; letter-spacing:0.02em; min-width:0; }
+.sd-m .k s { text-decoration:none; color:var(--mute); }
+.sd-m .v { font-family:var(--mono); font-size:12px; text-align:right;
+  font-variant-numeric:tabular-nums; }
+.sd-bar { position:relative; height:12px; background:#efefef; }
+.sd-bar i { position:absolute; top:0; bottom:0; width:2px; background:var(--ink); }
+.sd-bar.out { background:#ffe9e9; }
+.sd-bar.out i { background:var(--focus); }
+.sd-bar.und { background:repeating-linear-gradient(90deg,#efefef 0 3px,#fff 3px 6px); }
+/* no ceiling: the track dissolves instead of ending, so the eye does not read
+   an edge where the charter deliberately removed one */
+.sd-bar.openend { background:linear-gradient(90deg,#efefef 60%,rgba(239,239,239,0)); }
+.sd-m .d { font-family:var(--mono); font-size:10px; letter-spacing:0.08em;
+  text-transform:uppercase; text-align:right; color:var(--mute); }
+.sd-m .d.fail { color:var(--focus); }
+
+/* ---- what is engaged right now --------------------------------------- */
+.sd-now { display:grid; grid-template-columns:auto auto 1fr; gap:22px; align-items:baseline; }
+.sd-now .big { font-size:26px; font-weight:700; letter-spacing:-0.02em;
+  font-family:var(--mono); }
+.sd-now .vc { font-size:26px; font-weight:700; letter-spacing:-0.03em;
+  font-variant-numeric:tabular-nums; }
+/* ---- the only genuinely real-time layer ------------------------------
+   Everything else on this page is derived from the factory's window log, and
+   the window is 11.7 s, so nothing derived from it can honestly move faster
+   than that. This block reads the AUDIO ITSELF, in the visitor's own browser,
+   through a Web Audio analyser at frame rate. It costs the server nothing, it
+   is not a summary of anything, and it is literally the sound arriving as it
+   arrives. It exists only while the stream is playing, which is correct: there
+   is nothing real-time to show to someone who is not listening. */
+.sd-rt { margin-top:14px; }
+/* A SCROLLING SPECTROGRAM, and it costs the server nothing.
+   The analyser already computes a full FFT every frame for the numbers above;
+   this draws that frame as one column of pixels and shifts the canvas left, so
+   the picture is the last few seconds of the stream as it arrived. All of it
+   happens in the listener's own browser, only while they are listening. The
+   expensive way to do this would be rendering spectrogram images on the server;
+   there is no reason to, and it would not be live. */
+/* Transparent, so the waterfall sits ON the page rather than in a box. The
+   quiet end of the ramp fades into the paper, which is why the palette had to
+   be inverted: on black, silence is black; on paper, silence is paper. */
+.sd-spec { width:100%; height:200px; display:block; margin-top:6px;
+  background:transparent; }
+/* THE SLOT RIBBON. Three lanes, one per timescale, blocks butted together so a
+   long dwell reads as a long bar. Plain elements, no canvas: nothing here can
+   halt, drift, or need a browser to hand over audio. */
+.sd-ribbon { margin-top:6px; }
+.sd-rrow { display:flex; align-items:center; gap:10px; margin-bottom:3px; }
+.sd-rrow > b { flex:0 0 42px; font-size:10px; font-weight:600; text-align:right;
+  color:#8a8a8a; letter-spacing:0.06em; text-transform:lowercase; }
+.sd-rlane { flex:1 1 auto; display:flex; height:20px; overflow:hidden; }
+/* Alternating tone rather than a fixed one, so the BOUNDARY between two runs of
+   the same machine is visible. A single fill would make consecutive holds look
+   like one long hold, which is the exact thing this figure exists to tell
+   apart. */
+.sd-rc { display:block; height:100%; box-sizing:border-box;
+  border-right:1px solid rgba(255,255,255,0.85);
+  background:#d9dfe3; color:#3a3a3a; font-size:9.5px; line-height:20px;
+  font-style:normal; letter-spacing:0.02em; padding-left:4px;
+  white-space:nowrap; overflow:hidden; font-variant-numeric:tabular-nums; }
+.sd-rrow:nth-child(1) .sd-rc { background:#b9c8d2; }
+.sd-rrow:nth-child(2) .sd-rc { background:#cbd6dc; }
+.sd-rrow:nth-child(3) .sd-rc { background:#dfe4e7; }
+.sd-rc:last-child { border-right:0; box-shadow:inset -2px 0 0 #c83030; }
+/* The number, not the name, is what survives a nine-pixel block. Centred and
+   tabular so a lane of them reads as a sequence rather than as noise. */
+.sd-rlane .sd-rc { padding-left:0; text-align:center; font-size:9px; }
+.sd-roster span u { text-decoration:none; font-weight:700;
+  font-variant-numeric:tabular-nums; opacity:0.75; }
+.sd-rtnums { display:flex; gap:26px; align-items:baseline; }
+.sd-rtnums div span { font-variant-numeric:tabular-nums; font-weight:700;
+  font-size:17px; letter-spacing:-0.02em; }
+.sd-rtoff { color:var(--mute); font-size:11.5px; padding:12px 0; }
+
+/* one bar per window, height by concurrent voices */
+.sd-voices { display:flex; gap:1px; height:22px; align-items:flex-end; }
+.sd-voices i { flex:1 1 0; min-width:0; background:var(--ghost); }
+.sd-voices i.now { background:var(--focus); }
+/* the vocabulary, ordered by recency. Opacity is time-since-last-heard, so the
+   grid shows both what the factory currently reaches for and the long tail it
+   has stopped reaching for -- which is what m4 measures as a single number. */
+/* A GRID, NOT A RUN OF INLINE TOKENS.
+   The first version laid these out as inline spans and produced one endless
+   horizontal line. The cause was not CSS but the join: the spans were
+   concatenated with no whitespace between them and each carried
+   white-space:nowrap, so the line had no break opportunity anywhere along its
+   length and the browser correctly refused to wrap it. Adding spaces back would
+   have fixed the overflow and left a ragged cloud; a fixed grid is what the
+   superdark.ai language actually uses, and it gives every behaviour the same
+   footprint so the eye reads the vocabulary as a set instead of a sentence. */
+.sd-roster { display:grid; grid-template-columns:repeat(auto-fill, minmax(76px, 1fr));
+  gap:1px; margin-top:10px; font-family:var(--mono); font-size:9.5px; }
+.sd-roster span { padding:4px 5px; background:#eeeeee; overflow:hidden;
+  text-overflow:ellipsis; white-space:nowrap; line-height:1.35; }
+.sd-roster span.on { background:var(--ink); color:var(--paper); font-weight:700; }
+
+/* the density strip: one mark per sampled window, greyscale by level */
+.sd-trace { display:flex; gap:1px; height:34px; align-items:flex-end; margin-top:8px; }
+.sd-trace i { flex:1 1 0; min-width:0; background:var(--ink); }
+
+.sd-two { display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+.sd-kv { display:flex; justify-content:space-between; gap:12px;
+  font-family:var(--mono); font-size:11px; padding:4px 0;
+  border-bottom:1px solid var(--rule); }
+.sd-kv:last-child { border-bottom:0; }
+.sd-kv b { font-weight:400; color:var(--mute); letter-spacing:0.06em;
+  text-transform:uppercase; font-size:10px; }
+.sd-kv span { font-variant-numeric:tabular-nums; }
+
+.sd-ews { font-family:var(--mono); font-size:11px; }
+.sd-ews .r { display:grid; grid-template-columns:1fr auto auto;
+  gap:10px; padding:4px 0; align-items:baseline; }
+.sd-ews .arrow { color:var(--mute); }
+
+/* the admissions: what the factory does NOT have. Deliberately not collapsed
+   behind a disclosure -- an admission you have to click to see is decoration. */
+.sd-gaps { background:var(--ink); color:#dcdcdc; padding:18px 20px; margin-top:26px; }
+.sd-gaps h4 { font-family:var(--mono); font-size:10px; letter-spacing:0.14em;
+  text-transform:uppercase; color:#8a8a8a; margin:0 0 10px; font-weight:400; }
+.sd-gaps .g { padding:6px 0; border-bottom:1px solid #232323; font-size:12.5px; }
+.sd-gaps .g:last-child { border-bottom:0; }
+.sd-gaps .g b { color:#fff; font-weight:400; }
+.sd-gaps .g s { text-decoration:none; font-family:var(--mono); font-size:10px;
+  letter-spacing:0.1em; text-transform:uppercase; color:#8a8a8a; margin-left:6px; }
+
+.sd-foot { margin-top:22px; border-top:1px solid var(--ghost); padding-top:12px;
+  color:var(--mute); font-size:12px; }
+.sd-foot a { color:var(--ink); }
+.sd-foot em { font-style:italic; }
+
+@media (max-width:640px) {
+  .sd-figs { grid-template-columns:repeat(2,1fr); }
+  .sd-two { grid-template-columns:1fr; gap:18px; }
+  /* Two figures per row, so their labels must reserve the same height or the
+     numbers sit on different baselines whenever one label wraps. */
+  .sd-fig .sd-lab { display:block; min-height:2.5em; }
+
+  /* The bar MOVES rather than disappearing. The first version hid it below
+     640px, which on a phone left a number and a verdict and threw away the one
+     element that shows a metric approaching its bound -- the whole reason the
+     panel exists. It now spans a second row under the label. */
+  .sd-m { grid-template-columns:auto 1fr auto;
+          grid-template-areas:"k k d" "v roll d" "bar bar bar";
+          gap:3px 10px; padding:9px 0; }
+  .sd-mh { display:none; }
+  .sd-m .v { text-align:left; font-size:15px; }
+  .sd-m .roll { text-align:left; }
+  .sd-m .d { align-self:center; }
+  .sd-m .bar-cell { margin-top:4px; }
+  .sd-bar { height:8px; }
+  .sd-roster { font-size:9.5px; }
+}
